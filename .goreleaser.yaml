@@ -31,11 +31,11 @@ changelog:
       - '^docs:'
       - '^test:'
 brews:
-- name: tfautomv
+- name: aws-cost-report
   homepage: https://github.com/stangirard/aws-cost-report
   tap:
-    owner: padok-team
-    name: tfautomv
+    owner: stangirard
+    name: aws-cost-report
 nfpms:
   - maintainer: stan@primates.dev <stan@primates.dev>
     description: Aws Cost Report
