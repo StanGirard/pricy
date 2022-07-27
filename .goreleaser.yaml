@@ -35,7 +35,7 @@ brews:
   homepage: https://github.com/stangirard/pricy
   tap:
     owner: stangirard
-    name: homebrew-pricy
+    name: homebrew-tap
     token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"  
 nfpms:
   - maintainer: stan@primates.dev <stan@primates.dev>
