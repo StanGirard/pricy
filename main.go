@@ -5,6 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/stangirard/pricy/internal/awswrapper"
 )
 
 var (
@@ -28,6 +30,6 @@ func run() error {
 		fmt.Println(version)
 		return nil
 	}
-	awswrapper.initCostExplorer()
+	awswrapper.InitCostExplorer()
 	return nil
 }

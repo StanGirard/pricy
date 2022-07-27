@@ -31,7 +31,7 @@ type DateInterval struct {
 	End   string `json:"end"`
 }
 
-func initCostExplorer() *costexplorer.GetCostAndUsageOutput {
+func InitCostExplorer() *costexplorer.GetCostAndUsageOutput {
 	sess := createSession()
 	costExplorer := createCostExplorer(sess)
 	cost, err := getCostUsage(costExplorer, "2022-07-01", "2022-07-20")
