@@ -9,7 +9,7 @@ builds:
       - windows
       - darwin
     main: ./
-    binary: aws-cost-report
+    binary: pricy
 archives:
   - replacements:
       darwin: Darwin
@@ -31,15 +31,15 @@ changelog:
       - '^docs:'
       - '^test:'
 brews:
-- name: aws-cost-report
-  homepage: https://github.com/stangirard/aws-cost-report
+- name: pricy
+  homepage: https://github.com/stangirard/homebrew-pricy
   tap:
     owner: stangirard
-    name: aws-cost-report
+    name: homebrew-pricy
 nfpms:
   - maintainer: stan@primates.dev <stan@primates.dev>
     description: Aws Cost Report
-    homepage: https://github.com/stangirard/aws-cost-report
+    homepage: https://github.com/stangirard/pricy
     license: Apache 2.0
     file_name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}'
     formats:
