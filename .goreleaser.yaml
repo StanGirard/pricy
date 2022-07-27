@@ -32,7 +32,7 @@ changelog:
       - '^test:'
 brews:
 - name: pricy
-  homepage: https://github.com/stangirard/homebrew-pricy
+  homepage: https://github.com/stangirard/pricy
   tap:
     owner: stangirard
     name: homebrew-pricy
