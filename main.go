@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stangirard/pricy/internal/awswrapper"
+	"github.com/stangirard/pricy/internal/aws"
 )
 
 var (
@@ -30,6 +30,6 @@ func run() error {
 		fmt.Println(version)
 		return nil
 	}
-	awswrapper.InitCostExplorer()
+	aws.InitCostExplorer()
 	return nil
 }

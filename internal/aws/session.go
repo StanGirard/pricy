@@ -1,4 +1,4 @@
-package awswrapper
+package aws
 
 // Import AWS session
 import (
