@@ -1,4 +1,4 @@
-package aws
+package awswrapper
 
 import (
 	"github.com/aws/aws-sdk-go/aws"
@@ -24,4 +24,19 @@ func getCostUsage(costExplorer *costexplorer.CostExplorer, start, end string) (*
 			aws.String("NET_RISK"),
 		},
 	})
+}
+
+type DateInterval struct {
+	Start string `json:"start"`
+	End   string `json:"end"`
+}
+
+func initCostExplorer() *costexplorer.GetCostAndUsageOutput {
+	sess := createSession()
+	costExplorer := createCostExplorer(sess)
+	cost, err := getCostUsage(costExplorer, "2022-07-01", "2022-07-20")
+	if err != nil {
+		panic(err)
+	}
+	return cost
 }

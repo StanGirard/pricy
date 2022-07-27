@@ -28,7 +28,6 @@ func run() error {
 		fmt.Println(version)
 		return nil
 	}
-	aws.getCostUsage()
-
+	awswrapper.initCostExplorer()
 	return nil
 }
