@@ -9,7 +9,7 @@ builds:
       - windows
       - darwin
     main: ./
-    binary: tfautomv
+    binary: aws-cost-report
 archives:
   - replacements:
       darwin: Darwin
