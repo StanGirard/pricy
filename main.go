@@ -28,6 +28,7 @@ func run() error {
 		fmt.Println(version)
 		return nil
 	}
+	aws.getCostUsage()
 
 	return nil
 }
