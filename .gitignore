@@ -2,3 +2,4 @@ dist/*
 bin/*
 .vscode/*
 .envrc
+reports.csv

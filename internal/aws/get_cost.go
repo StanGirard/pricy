@@ -28,7 +28,7 @@ func getCostUsageByService(costExplorer *costexplorer.CostExplorer, start, end s
 			Not: &costexplorer.Expression{
 				Dimensions: &costexplorer.DimensionValues{
 					Key:    aws.String("RECORD_TYPE"),
-					Values: []*string{aws.String("REFUND"), aws.String("Credit"), aws.String("SavingsPlanNegation")},
+					Values: []*string{aws.String("REFUND"), aws.String("Credit"), aws.String("SavingsPlanNegation"), aws.String("Tax")},
 				},
 			},
 		},
