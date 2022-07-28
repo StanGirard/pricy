@@ -3,3 +3,4 @@ bin/*
 .vscode/*
 .envrc
 reports.csv
+.DS_Store
