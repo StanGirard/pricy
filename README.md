@@ -52,5 +52,5 @@ pricy --sso --granularity monthly --month  --csv
 Generates a csv report for the price  from one month ago
 
 <p align="center">
-<img src="docs/csv-aws-reports-granularity-month-details.png" alt="csv-aws-reports-granularity-month-details" width="40%">
+<img src="docs/csv-aws-reports-granularity-month-details-month.png" alt="csv-aws-reports-granularity-month-details-month" width="40%">
 <p align="center">
