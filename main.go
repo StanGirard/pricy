@@ -6,14 +6,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/aws/aws-sdk-go/aws/session"
-
 	"github.com/stangirard/pricy/internal/aws"
 )
 
 var (
 	printVersion = flag.Bool("version", false, "print version and exit")
-	sso          = flag.Bool("sso", false, "Use AWS SSO")
 )
 
 func main() {
@@ -34,14 +31,8 @@ func run() error {
 		return nil
 	}
 
-	var sess *session.Session
-	if *sso {
-		sess = aws.CreateSessionWithSSO()
-
-	} else {
-		sess = aws.CreateSessionWithCredentials()
-	}
-	aws.InitCostExplorer(sess)
+	session := aws.InitSession()
+	aws.InitCostExplorer(session)
 
 	return nil
 }
