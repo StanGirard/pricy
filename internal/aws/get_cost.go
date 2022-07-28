@@ -1,8 +1,11 @@
 package aws
 
 import (
+	"strconv"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/costexplorer"
+	"github.com/stangirard/pricy/internal/format"
 )
 
 func getCostUsageByService(costExplorer *costexplorer.CostExplorer, start, end string, granularity string) *costexplorer.GetCostAndUsageOutput {
@@ -35,4 +38,19 @@ func getCostUsageByService(costExplorer *costexplorer.CostExplorer, start, end s
 	}
 	return costAndUsageOutput
 
+}
+
+func FormatCostUsagebyService(cost *costexplorer.GetCostAndUsageOutput) []format.Service {
+	var services []format.Service
+	for _, result := range cost.ResultsByTime {
+		for _, group := range result.Groups {
+			for index, metric := range group.Metrics {
+				if index == "UnblendedCost" {
+					cost, _ := strconv.ParseFloat(*metric.Amount, 64)
+					services = format.AddServices(services, *group.Keys[0], *metric.Unit, format.DateInterval{Start: *result.TimePeriod.Start, End: *result.TimePeriod.End}, cost)
+				}
+			}
+		}
+	}
+	return services
 }

@@ -34,6 +34,6 @@ func InitCostExplorer(session *session.Session) {
 	}
 	// uppercase string for the granularity
 	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(*granularity))
-	formatCostUsagebyService := format.FormatCostUsagebyService(costUsageByService)
+	formatCostUsagebyService := FormatCostUsagebyService(costUsageByService)
 	reports.GenerateReport(formatCostUsagebyService)
 }
