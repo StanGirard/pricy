@@ -12,24 +12,39 @@ var (
 	details = flag.Bool("details", false, "print details")
 )
 
-func PrintCostByService(ServicesPrices []format.ServicePrice) {
-	//Sort by Price
-	sort.Slice(ServicesPrices, func(i, j int) bool {
-		return ServicesPrices[i].Cost > ServicesPrices[j].Cost
+func PrintCostByService(PricePerDate []format.PricePerDate) {
+	//Sort by DateInterval Start
+	TotalCostUsage := TotalCostUsage(PricePerDate)
+	sort.Slice(PricePerDate, func(i, j int) bool {
+		return PricePerDate[i].DateInterval.Start < PricePerDate[j].DateInterval.Start
 	})
 
-	for _, price := range ServicesPrices {
-		price.Print()
+	for _, pricesPerDay := range PricePerDate {
+		//Print in Bold
+		fmt.Printf("%s - %s: Price is %f\n", pricesPerDay.DateInterval.Start, pricesPerDay.DateInterval.End, FindPriceForDateInterval(TotalCostUsage, pricesPerDay.DateInterval))
+		fmt.Println("-----------------------------")
+
+		sort.Slice(pricesPerDay.ServicePrice, func(i, j int) bool {
+			return pricesPerDay.ServicePrice[i].Cost > pricesPerDay.ServicePrice[j].Cost
+		})
+		if *details {
+			for _, servicePrice := range pricesPerDay.ServicePrice {
+				//Sort by cost
+
+				fmt.Printf("%s: %f%s\n", servicePrice.Service, servicePrice.Cost, format.UnitsToSymbol[servicePrice.Units])
+			}
+		}
 	}
+
 }
 
 func PrintTotalCost(totalCost float64) {
 	fmt.Println("Total Cost:", totalCost)
 }
 
-func reportGenerate(costByServices []format.ServicePrice) {
-	if *details {
-		PrintCostByService(costByServices)
-	}
-	PrintTotalCost(TotalCostUsage(costByServices))
+func reportGenerate(costByServices []format.PricePerDate) {
+
+	PrintCostByService(costByServices)
+
+	// PrintTotalCost(TotalCostUsage(costByServices))
 }

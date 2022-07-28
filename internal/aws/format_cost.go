@@ -7,33 +7,59 @@ import (
 	"github.com/stangirard/pricy/internal/format"
 )
 
-func formatCostUsagebyService(cost *costexplorer.GetCostAndUsageOutput) []format.ServicePrice {
-	var servicePrices []format.ServicePrice
+func formatCostUsagebyService(cost *costexplorer.GetCostAndUsageOutput) []format.PricePerDate {
+	var pricePerDate []format.PricePerDate
 
-	for _, costDetail := range cost.ResultsByTime {
-		for _, group := range costDetail.Groups {
-
-			var servicePrice format.ServicePrice
-			servicePrice.Service = *group.Keys[0]
+	for _, result := range cost.ResultsByTime {
+		var servicePrices []format.ServicePrice
+		for _, group := range result.Groups {
 			for index, metric := range group.Metrics {
 				if index == "UnblendedCost" {
 					cost, _ := strconv.ParseFloat(*metric.Amount, 64)
-					servicePrice.Cost = cost
-					servicePrice.Units = *metric.Unit
+					servicePrices = append(servicePrices, format.ServicePrice{
+						Service: *group.Keys[0],
+						Cost:    cost,
+						Units:   *metric.Unit,
+					})
 				}
 			}
-			servicePrices = append(servicePrices, servicePrice)
-
 		}
+		pricePerDate = append(pricePerDate, format.PricePerDate{
+			DateInterval: format.DateInterval{
+				Start: *result.TimePeriod.Start,
+				End:   *result.TimePeriod.End,
+			},
+			ServicePrice: servicePrices,
+		})
 	}
-	return servicePrices
+	return pricePerDate
 }
 
-func TotalCostUsage(ServicesPrices []format.ServicePrice) float64 {
-	var totalCost float64
-	for _, price := range ServicesPrices {
-		totalCost = totalCost + price.Cost
-	}
-	return totalCost
+type TotalPerDay struct {
+	DateInterval format.DateInterval
+	TotalCost    float64
+}
 
+func TotalCostUsage(PricePerDate []format.PricePerDate) []TotalPerDay {
+	var TotalPerDays []TotalPerDay
+	for _, pricesPerDay := range PricePerDate {
+		var totalCost float64
+		for _, servicePrice := range pricesPerDay.ServicePrice {
+			totalCost += servicePrice.Cost
+		}
+		TotalPerDays = append(TotalPerDays, TotalPerDay{
+			DateInterval: pricesPerDay.DateInterval,
+			TotalCost:    totalCost,
+		})
+	}
+	return TotalPerDays
+}
+
+func FindPriceForDateInterval(PricePerDate []TotalPerDay, dateInterval format.DateInterval) float64 {
+	for _, pricesPerDay := range PricePerDate {
+		if pricesPerDay.DateInterval.Start == dateInterval.Start && pricesPerDay.DateInterval.End == dateInterval.End {
+			return pricesPerDay.TotalCost
+		}
+	}
+	return 0
 }

@@ -29,7 +29,7 @@ func InitCostExplorer(session *session.Session) {
 	} else {
 		dateInterval = dates.FromLastWeekToNow()
 	}
-	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End)
+	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, "MONTHLY")
 	formatCostUsagebyService := formatCostUsagebyService(costUsageByService)
 	reportGenerate(formatCostUsagebyService)
 }

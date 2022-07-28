@@ -9,13 +9,13 @@ import (
 
 type ServicesPrices []format.ServicePrice
 
-func getCostUsageByService(costExplorer *costexplorer.CostExplorer, start, end string) *costexplorer.GetCostAndUsageOutput {
+func getCostUsageByService(costExplorer *costexplorer.CostExplorer, start, end string, granularity string) *costexplorer.GetCostAndUsageOutput {
 	costAndUsageOutput, err := costExplorer.GetCostAndUsage(&costexplorer.GetCostAndUsageInput{
 		TimePeriod: &costexplorer.DateInterval{
 			Start: aws.String(start),
 			End:   aws.String(end),
 		},
-		Granularity: aws.String("MONTHLY"),
+		Granularity: aws.String(granularity),
 		Metrics: []*string{
 			aws.String("UNBLENDED_COST"),
 		},
