@@ -3,11 +3,7 @@ package aws
 import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/costexplorer"
-
-	"github.com/stangirard/pricy/internal/format"
 )
-
-type ServicesPrices []format.ServicePrice
 
 func getCostUsageByService(costExplorer *costexplorer.CostExplorer, start, end string, granularity string) *costexplorer.GetCostAndUsageOutput {
 	costAndUsageOutput, err := costExplorer.GetCostAndUsage(&costexplorer.GetCostAndUsageInput{

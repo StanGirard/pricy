@@ -1,16 +1,26 @@
 package format
 
-import "fmt"
-
-type ServicePrice struct {
-	Service string
-	Cost    float64
-	Units   string
+type Service struct {
+	Service   string
+	Units     string
+	DatePrice map[DateInterval]float64
 }
 
-type PricePerDate struct {
-	DateInterval DateInterval
-	ServicePrice []ServicePrice
+func AddServices(servicesArray []Service, service, units string, Date DateInterval, price float64) []Service {
+	for _, serv := range servicesArray {
+		if serv.Service == service {
+			serv.DatePrice[Date] = price
+			return servicesArray
+		}
+	}
+	servicesArray = append(servicesArray, Service{
+		Service: service,
+		Units:   units,
+		DatePrice: map[DateInterval]float64{
+			Date: price,
+		},
+	})
+	return servicesArray
 }
 
 var UnitsToSymbol = map[string]string{
@@ -32,7 +42,14 @@ var UnitsToSymbol = map[string]string{
 	"TRY": "₺",
 }
 
-// define print function for ServicePrice
-func (s ServicePrice) Print() {
-	fmt.Printf("Service: %s, Cost: %f%s\n", s.Service, s.Cost, UnitsToSymbol[s.Units])
+func FindAllDateIntervals(services []Service) []DateInterval {
+	var dates []DateInterval
+	for _, service := range services {
+		for date := range service.DatePrice {
+			if !ContainsDateInterval(dates, date) {
+				dates = append(dates, date)
+			}
+		}
+	}
+	return dates
 }
