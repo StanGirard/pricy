@@ -1,2 +1,4 @@
 dist/*
 bin/*
+.vscode/*
+.envrc

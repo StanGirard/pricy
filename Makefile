@@ -9,7 +9,7 @@ help: Makefile
 ## build: Build tfautomv binary
 .PHONY: build
 build: fmt vet
-	go build -o bin/cost-explorer
+	go build -o bin/pricy
 
 ## fmt: Format source code
 .PHONY: fmt

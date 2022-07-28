@@ -89,9 +89,8 @@ type DateInterval struct {
 	End   string `json:"end"`
 }
 
-func InitCostExplorer() {
-	sess := createSession()
-	costExplorer := createCostExplorer(sess)
+func InitCostExplorer(session *session.Session) {
+	costExplorer := createCostExplorer(session)
 	prices := parseCostUsagebyService(getCostUsageByService(costExplorer, "2022-07-01", "2022-07-20"))
 	for _, price := range prices {
 		price.print()
