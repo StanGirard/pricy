@@ -9,9 +9,28 @@ type ServicePrice struct {
 	DateInterval DateInterval
 }
 
+var UnitsToSymbol = map[string]string{
+	"USD": "$",
+	"GBP": "£",
+	"EUR": "€",
+	"JPY": "¥",
+	"CAD": "$",
+	"AUD": "$",
+	"NZD": "$",
+	"CHF": "Fr",
+	"SEK": "kr",
+	"NOK": "kr",
+	"DKK": "kr",
+	"KRW": "₩",
+	"RUB": "₽",
+	"INR": "₹",
+	"BRL": "R$",
+	"TRY": "₺",
+}
+
 // define print function for ServicePrice
 func (s ServicePrice) Print() {
-	fmt.Printf("Service: %s, Cost: %f, Units: %s\n", s.Service, s.Cost, s.Units)
+	fmt.Printf("Service: %s, Cost: %f%s\n", s.Service, s.Cost, UnitsToSymbol[s.Units])
 }
 
 func (s ServicePrice) PrintDateInterval() {

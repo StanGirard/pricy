@@ -1,12 +1,17 @@
 package aws
 
 import (
-	"fmt"
+	"flag"
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/costexplorer"
 	"github.com/stangirard/pricy/internal/dates"
 	"github.com/stangirard/pricy/internal/format"
+)
+
+var (
+	date  = flag.String("date", "", "date to get cost usage")
+	month = flag.Bool("month", false, "get cost usage for month")
 )
 
 func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
@@ -16,6 +21,7 @@ func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
 func InitCostExplorer(session *session.Session) {
 	// Initialize the session
 	costExplorer := createCostExplorer(session)
+
 	// Generating Date
 	var dateInterval format.DateInterval
 	if *month {
@@ -23,6 +29,7 @@ func InitCostExplorer(session *session.Session) {
 	} else {
 		dateInterval = dates.FromLastWeekToNow()
 	}
-	costUsageByServiceOutput := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End)
-	fmt.Println("Total Cost Usage: ", TotalCostUsage(costUsageByServiceOutput), "From:", dateInterval.Start, "To:", dateInterval.End)
+	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End)
+	formatCostUsagebyService := formatCostUsagebyService(costUsageByService)
+	reportGenerate(formatCostUsagebyService)
 }

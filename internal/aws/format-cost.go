@@ -30,10 +30,9 @@ func formatCostUsagebyService(cost *costexplorer.GetCostAndUsageOutput) []format
 	return servicePrices
 }
 
-func TotalCostUsage(costOutput *costexplorer.GetCostAndUsageOutput) float64 {
-	parsedCost := formatCostUsagebyService(costOutput)
+func TotalCostUsage(ServicesPrices []format.ServicePrice) float64 {
 	var totalCost float64
-	for _, price := range parsedCost {
+	for _, price := range ServicesPrices {
 		totalCost = totalCost + price.Cost
 	}
 	return totalCost
