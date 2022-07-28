@@ -23,9 +23,13 @@ func PrintCostByService(ServicesPrices []format.ServicePrice) {
 	}
 }
 
+func PrintTotalCost(totalCost float64) {
+	fmt.Println("Total Cost:", totalCost)
+}
+
 func reportGenerate(costByServices []format.ServicePrice) {
 	if *details {
 		PrintCostByService(costByServices)
 	}
-	fmt.Println(TotalCostUsage(costByServices))
+	PrintTotalCost(TotalCostUsage(costByServices))
 }

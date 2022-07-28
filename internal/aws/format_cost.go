@@ -12,7 +12,6 @@ func formatCostUsagebyService(cost *costexplorer.GetCostAndUsageOutput) []format
 
 	for _, costDetail := range cost.ResultsByTime {
 		for _, group := range costDetail.Groups {
-			// Print UNBLENDED_COST and BLENDED_COST with name and value
 
 			var servicePrice format.ServicePrice
 			servicePrice.Service = *group.Keys[0]

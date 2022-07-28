@@ -17,15 +17,20 @@ func WeekInterval(date time.Time) format.DateInterval {
 
 }
 
+func MonthInterval(date time.Time) format.DateInterval {
+	//remove one month from date
+	start := date.AddDate(0, -1, 0)
+	end := date
+	return format.DateInterval{
+		Start: start.Format("2006-01-02"),
+		End:   end.Format("2006-01-02"),
+	}
+}
+
 func FromLastWeekToNow() format.DateInterval {
 	return WeekInterval(time.Now())
 }
 
 func FromLastMonthToNow() format.DateInterval {
-	start := time.Now().AddDate(0, -1, 0)
-	end := time.Now()
-	return format.DateInterval{
-		Start: start.Format("2006-01-02"),
-		End:   end.Format("2006-01-02"),
-	}
+	return MonthInterval(time.Now())
 }
