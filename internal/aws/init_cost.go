@@ -2,6 +2,7 @@ package aws
 
 import (
 	"flag"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/costexplorer"
@@ -10,8 +11,9 @@ import (
 )
 
 var (
-	date  = flag.String("date", "", "date to get cost usage")
-	month = flag.Bool("month", false, "get cost usage for month")
+	date        = flag.String("date", "", "date to get cost usage")
+	month       = flag.Bool("month", false, "get cost usage for month")
+	granularity = flag.String("granularity", "DAILY", "granularity to get cost usage")
 )
 
 func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
@@ -29,7 +31,8 @@ func InitCostExplorer(session *session.Session) {
 	} else {
 		dateInterval = dates.FromLastWeekToNow()
 	}
-	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, "MONTHLY")
+	// uppercase string for the granularity
+	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(*granularity))
 	formatCostUsagebyService := formatCostUsagebyService(costUsageByService)
 	reportGenerate(formatCostUsagebyService)
 }
