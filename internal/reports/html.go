@@ -1,42 +1,77 @@
 package reports
 
 import (
+	"bytes"
+	_ "embed"
 	"flag"
 	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"text/template"
 
 	"github.com/stangirard/pricy/internal/format"
 )
+
+//go:embed templates/content.tmpl
+var contentTmpl string
+
+//go:embed templates/footer.tmpl
+var footerTmpl string
+
+//go:embed templates/header.tmpl
+var headerTmpl string
+
+//go:embed templates/page.tmpl
+var pageTmpl string
+
+//go
 
 var (
 	html = flag.Bool("html", false, "print in html format")
 )
 
-func (services Services) generateHTML() string {
-	var html string
-	html += "<html><head><title>Pricy</title></head><body>"
-	html += "<h1>Pricy</h1>"
-	html += "<table>"
-	html += "<tr><th>Service</th>"
-	dates := format.SortDates(format.FindDatesIntervals(services))
-	for _, dates := range dates {
-		html += fmt.Sprint("<th>", dates.Start, "</th>")
-	}
-	html += "</tr>"
-	for _, service := range services {
-		html += "<tr>"
-		html += fmt.Sprint("<td><b>", service.Name, "</b></td>")
-		for _, date := range dates {
-			// Maximum 2 decimal places for prices
-			html += fmt.Sprint("<td>", fmt.Sprintf("%.2f", service.DatePrice[date]), "</td>")
-		}
-		html += "</tr>"
-	}
+func getPriceForDateService(service format.Service, date format.DateInterval) float64 {
 
-	html += "</table>"
-	html += "</body></html>"
-	return html
+	stringValue := fmt.Sprintf("%.2f", service.DatePrice[date])
+	fl, _ := strconv.ParseFloat(stringValue, 64)
+	return fl
+}
+
+func (services Services) generateHTML() string {
+	dates := format.SortDates(format.FindDatesIntervals(services))
+	// Create a template containing contentTmpl and footerTmpl and headerTmpl and pageTmpl
+	tmpl, err := template.New("content").Funcs(template.FuncMap{"getPrice": getPriceForDateService}).Parse(contentTmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tmpl, err = tmpl.New("footer").Parse(footerTmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tmpl, err = tmpl.New("header").Parse(headerTmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tmpl, err = tmpl.New("page").Parse(pageTmpl)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Create a buffer to hold the generated HTML
+	var processed bytes.Buffer
+	// Pass dates and services to the template.
+	tmpl.Execute(&processed, struct {
+		Title    string
+		Dates    []format.DateInterval
+		Services []format.Service
+	}{
+		Title:    "Pricy",
+		Dates:    dates,
+		Services: services,
+	})
+	fmt.Println(processed.String())
+	return processed.String()
 
 }
 

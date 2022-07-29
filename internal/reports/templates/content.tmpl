@@ -1,0 +1,19 @@
+{{define "content" -}}
+{{ $Services := .Services }}
+{{ $Dates := .Dates }}
+<div class="containers">
+    <h3 class="title">{{.Title}} </h3>
+    <table>
+    <tr><th>Service</th>{{range .Dates}}<th>{{.Start}}</th>{{end}}
+    {{range $Services := $Services }}
+    <tr><td>{{$Services.Name}}</td>
+        {{range $Dates := $Dates}}
+        {{$x:= getPrice $Services $Dates}}
+        <td>{{$x}}</td>
+        {{end}}
+    </tr>
+    {{end}}
+    </table>
+</div>
+{{end}}
+
