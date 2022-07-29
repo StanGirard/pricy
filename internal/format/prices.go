@@ -1,9 +1,11 @@
 package format
 
 type Service struct {
-	Service   string
-	Units     string
-	DatePrice map[DateInterval]float64
+	Service        string
+	Units          string
+	Account        string
+	DatePrice      map[DateInterval]float64
+	PriceEvolution map[DateInterval]float64
 }
 
 func AddServices(servicesArray []Service, service, units string, Date DateInterval, price float64) []Service {
@@ -19,6 +21,7 @@ func AddServices(servicesArray []Service, service, units string, Date DateInterv
 		DatePrice: map[DateInterval]float64{
 			Date: price,
 		},
+		PriceEvolution: map[DateInterval]float64{},
 	})
 	return servicesArray
 }

@@ -52,7 +52,9 @@ func GetCostByDateAllServices(costByDate []PriceToDate) float64 {
 
 func GenerateReport(costByServices []format.Service) {
 	flag.Parse()
+	GenerateEvolutionFromPreviousDate(costByServices)
 	PrintCostByService(costByServices)
 	GenerateCSVReport(costByServices)
+	GenerateEvolutionFromPreviousDate(costByServices)
 
 }

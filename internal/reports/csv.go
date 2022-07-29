@@ -12,7 +12,8 @@ import (
 )
 
 var (
-	csvFlag = flag.Bool("csv", false, "print in csv format")
+	csvFlag   = flag.Bool("csv", false, "print in csv format")
+	evolution = flag.Bool("evolution", false, "print evolution report")
 )
 
 func GenerateHeader(dates []format.DateInterval) []string {
@@ -29,7 +30,7 @@ func GenerateHeader(dates []format.DateInterval) []string {
 	return header
 }
 
-func GenerateCSVArray(Services []format.Service) [][]string {
+func GenerateCostCSVArray(Services []format.Service) [][]string {
 	var csvArray [][]string
 	csvArray = append(csvArray, GenerateHeader(format.FindAllDateIntervals(Services)))
 	dates := format.SortDates(format.FindAllDateIntervals(Services))
@@ -47,8 +48,8 @@ func GenerateCSVArray(Services []format.Service) [][]string {
 	return csvArray
 }
 
-func WriteCSVToFile(csvArray [][]string) {
-	f, err := os.Create("reports.csv")
+func WriteCSVToFile(csvArray [][]string, filepath string) {
+	f, err := os.Create(filepath)
 	defer f.Close()
 
 	if err != nil {
@@ -63,8 +64,31 @@ func WriteCSVToFile(csvArray [][]string) {
 
 func GenerateCSVReport(Services []format.Service) {
 	flag.Parse()
-	csvArray := GenerateCSVArray(Services)
+
 	if *csvFlag {
-		WriteCSVToFile(csvArray)
+		csvArray := GenerateCostCSVArray(Services)
+		WriteCSVToFile(csvArray, "reports.csv")
+		if *evolution {
+			evolutionCSVArray := GenerateCSVEvolutionReport(Services)
+			WriteCSVToFile(evolutionCSVArray, "evolution.csv")
+		}
 	}
+}
+
+func GenerateCSVEvolutionReport(Services []format.Service) [][]string {
+	var csvArray [][]string
+	csvArray = append(csvArray, GenerateHeader(format.FindAllDateIntervals(Services)))
+	dates := format.SortDates(format.FindAllDateIntervals(Services))
+	sort.Slice(Services, func(i, j int) bool {
+		return Services[i].Service < Services[j].Service
+	})
+	for _, service := range Services {
+		var csvRow []string
+		csvRow = append(csvRow, service.Service)
+		for _, date := range dates {
+			csvRow = append(csvRow, fmt.Sprintf("%.2f", service.PriceEvolution[date]))
+		}
+		csvArray = append(csvArray, csvRow)
+	}
+	return csvArray
 }

@@ -28,6 +28,7 @@ There are a couple of parameters that you can use
 - `--sso`: Use sso for credentials
 - `--csv`: Output the report as csv to `reports.csv`
 - `--granularity`: Granularity of the report, can be `daily`,  `monthly`
+- `--evolution`: Show the evolution of the report
 
 ## Example
 
