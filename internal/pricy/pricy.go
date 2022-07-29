@@ -6,7 +6,7 @@ import (
 	"github.com/stangirard/pricy/internal/reports"
 )
 
-type ServicesArray []format.Service
+type Services []format.Service
 
 func Run() error {
 	cost := aws.InitAWS()

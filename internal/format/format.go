@@ -15,7 +15,7 @@ type Service struct {
 	PriceEvolution map[DateInterval]float64
 }
 
-type ServicesArray []Service
+type Services []Service
 
 type TotalPerDay struct {
 	Date      DateInterval

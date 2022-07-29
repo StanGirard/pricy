@@ -1,10 +1,5 @@
 package format
 
-import (
-	"fmt"
-	"testing"
-)
-
 var ServicePrices []Service = []Service{
 	{
 		Service: "Amazon Elastic Compute Cloud",
@@ -15,10 +10,4 @@ var ServicePrices []Service = []Service{
 			{Start: "2019-03-01", End: "2019-03-31"}: 0.0,
 		},
 	},
-}
-
-func TestTotalCostUsage(t *testing.T) {
-	totalCost := TotalCostUsage(ServicePrices)
-	fmt.Println(totalCost)
-
 }

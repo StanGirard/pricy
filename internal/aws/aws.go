@@ -31,7 +31,11 @@ func InitAWS() []format.Service {
 	if interval == nil || *interval == "" {
 		dateInterval = helpers.DaysInterval(*days)
 	} else {
-		dateInterval = helpers.ParseInterval(*interval)
+		var err error
+		dateInterval, err = helpers.ParseInterval(*interval)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	// uppercase string for the granularity

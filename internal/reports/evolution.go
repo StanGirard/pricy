@@ -4,7 +4,7 @@ import (
 	"github.com/stangirard/pricy/internal/format"
 )
 
-func (services ServicesArray) calculateEvolution() {
+func (services Services) calculateEvolution() {
 	dates := format.FindDatesIntervals(services)
 	dates = format.SortDates(dates)
 	for _, service := range services {

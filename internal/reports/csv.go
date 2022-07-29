@@ -73,7 +73,7 @@ func csvEvolutionReport(Services []format.Service) [][]string {
 	return csvArray
 }
 
-func (services ServicesArray) initCSV() {
+func (services Services) initCSV() {
 	flag.Parse()
 
 	if *csvFlag {

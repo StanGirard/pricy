@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
@@ -16,13 +17,13 @@ func DaysInterval(days int) format.DateInterval {
 	}
 }
 
-func ParseInterval(interval string) format.DateInterval {
+func ParseInterval(interval string) (format.DateInterval, error) {
 	split := strings.Split(interval, ":")
 	if len(split) != 2 {
-		panic("Invalid interval")
+		return format.DateInterval{}, fmt.Errorf("Invalid interval")
 	}
 	return format.DateInterval{
 		Start: split[0],
 		End:   split[1],
-	}
+	}, nil
 }

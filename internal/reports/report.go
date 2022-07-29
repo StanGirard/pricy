@@ -19,9 +19,9 @@ type priceToDate struct {
 
 type priceToDateArray []priceToDate
 
-type ServicesArray []format.Service
+type Services []format.Service
 
-func (Services ServicesArray) printCost() {
+func (Services Services) printCost() {
 	allDates := format.SortDates(format.FindDatesIntervals(Services))
 	for _, date := range allDates {
 
@@ -54,7 +54,7 @@ func (costByDate priceToDateArray) getCostByDate() float64 {
 	return float64(int(total*100)) / 100
 }
 
-func InitReport(services ServicesArray) {
+func InitReport(services Services) {
 	flag.Parse()
 	services.calculateEvolution()
 	services.printCost()

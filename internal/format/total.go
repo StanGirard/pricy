@@ -1,7 +1,10 @@
 package format
 
-func TotalCostUsage(Services []Service) []TotalPerDay {
+import "fmt"
+
+func TotalCostUsage(Services Services) []TotalPerDay {
 	var TotalPerDays []TotalPerDay
+	fmt.Println("TotalCostUsage")
 	for _, service := range Services {
 		for date, price := range service.DatePrice {
 			for i := range TotalPerDays {
