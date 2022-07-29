@@ -1,0 +1,21 @@
+{{define "evolution" -}}
+{{ $Services := .Services }}
+{{ $Dates := .Dates }}
+{{ if .Evolution }}
+<div class="card-container">
+    <h3 class="title">Evolution of Price </h3>
+    <table class="styled-table">
+    <tr><th>Service</th>{{range .Dates}}<th>{{$y:= niceDate .Start}}{{$y}}</th>{{end}}
+    {{range $Services := $Services }}
+    <tr><td>{{$Services.Name}}</td>
+        {{range $Dates := $Dates}}
+        {{$x:= getEvolution $Services $Dates}}
+        <td>{{$x}}%</td>
+        {{end}}
+    </tr>
+    {{end}}
+    </table>
+</div>
+{{end}}
+{{end}}
+

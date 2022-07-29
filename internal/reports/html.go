@@ -14,8 +14,11 @@ import (
 	"github.com/stangirard/pricy/internal/format"
 )
 
-//go:embed templates/content.tmpl
-var contentTmpl string
+//go:embed templates/cost.tmpl
+var costTmpl string
+
+//go:embed templates/evolution.tmpl
+var evolutionTmpl string
 
 //go:embed templates/footer.tmpl
 var footerTmpl string
@@ -42,16 +45,21 @@ func getPriceForDateService(service format.Service, date format.DateInterval) fl
 	return fl
 }
 
+func getEvolutionForDateService(service format.Service, date format.DateInterval) float64 {
+
+	stringValue := fmt.Sprintf("%.2f", service.PriceEvolution[date])
+	fl, _ := strconv.ParseFloat(stringValue, 64)
+	return fl
+}
+
 func niceDate(date string) string {
 	t, _ := time.Parse("2006-01-02", date)
 	return t.Format("02/01")
 
 }
 
-func (services Services) generateHTML() string {
-	dates := format.SortDates(format.FindDatesIntervals(services))
-	// Create a template containing contentTmpl and footerTmpl and headerTmpl and pageTmpl
-	tmpl, err := template.New("content").Funcs(template.FuncMap{"getPrice": getPriceForDateService, "niceDate": niceDate}).Parse(contentTmpl)
+func createTemplate() (*template.Template, error) {
+	tmpl, err := template.New("cost").Funcs(template.FuncMap{"getPrice": getPriceForDateService, "niceDate": niceDate}).Parse(costTmpl)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -59,6 +67,11 @@ func (services Services) generateHTML() string {
 	if err != nil {
 		log.Fatal(err)
 	}
+	tmpl, err = tmpl.New("evolution").Funcs(template.FuncMap{"getEvolution": getEvolutionForDateService}).Parse(evolutionTmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	tmpl, err = tmpl.New("style").Parse(styleTmpl)
 	if err != nil {
 		log.Fatal(err)
@@ -68,7 +81,13 @@ func (services Services) generateHTML() string {
 		log.Fatal(err)
 	}
 	tmpl, err = tmpl.New("page").Parse(pageTmpl)
+	return tmpl, err
+}
 
+func (services Services) generateHTML() string {
+	dates := format.SortDates(format.FindDatesIntervals(services))
+	// Create a template containing contentTmpl and footerTmpl and headerTmpl and pageTmpl
+	tmpl, err := createTemplate()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -76,15 +95,17 @@ func (services Services) generateHTML() string {
 	var processed bytes.Buffer
 	// Pass dates and services to the template.
 	tmpl.Execute(&processed, struct {
-		Title    string
-		Dates    []format.DateInterval
-		Services []format.Service
+		Title     string
+		Dates     []format.DateInterval
+		Services  []format.Service
+		Evolution bool
 	}{
-		Title:    "Cost of services",
-		Dates:    dates,
-		Services: services,
+		Title:     "Cost of services",
+		Dates:     dates,
+		Services:  services,
+		Evolution: *evolution,
 	})
-	fmt.Println(processed.String())
+	fmt.Println("Evolution : ", *evolution)
 	return processed.String()
 
 }
