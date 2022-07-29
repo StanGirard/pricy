@@ -8,7 +8,7 @@ help: Makefile
 
 ## build: Build tfautomv binary
 .PHONY: build
-build: fmt vet lint
+build: fmt vet
 	go build -o bin/pricy
 
 ## fmt: Format source code

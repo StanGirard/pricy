@@ -23,7 +23,6 @@ type ServicesArray []format.Service
 
 func (Services ServicesArray) printCost() {
 	allDates := format.SortDates(format.FindDatesIntervals(Services))
-	fmt.Println("Lenght of all dates:", len(allDates))
 	for _, date := range allDates {
 
 		var pricesByDate priceToDateArray
