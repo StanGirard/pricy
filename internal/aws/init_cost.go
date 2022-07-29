@@ -6,8 +6,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/costexplorer"
-	"github.com/stangirard/pricy/internal/dates"
 	"github.com/stangirard/pricy/internal/format"
+	"github.com/stangirard/pricy/internal/helpers"
 	"github.com/stangirard/pricy/internal/reports"
 )
 
@@ -28,9 +28,9 @@ func InitCostExplorer(session *session.Session) {
 	// Generating Date
 	var dateInterval format.DateInterval
 	if *month {
-		dateInterval = dates.FromLastMonthToNow()
+		dateInterval = helpers.FromLastMonthToNow()
 	} else {
-		dateInterval = dates.FromLastWeekToNow()
+		dateInterval = helpers.FromLastWeekToNow()
 	}
 	// uppercase string for the granularity
 	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(*granularity))

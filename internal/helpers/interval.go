@@ -1,4 +1,4 @@
-package dates
+package helpers
 
 import (
 	"time"
