@@ -16,7 +16,7 @@ var (
 	evolution = flag.Bool("evolution", false, "print evolution report")
 )
 
-func GenerateCostCSVArray(Services []format.Service) [][]string {
+func generateCostCSVArray(Services []format.Service) [][]string {
 	var csvArray [][]string
 	csvArray = append(csvArray, format.FindDatesIntervals(Services).Headers())
 	dates := format.SortDates(format.FindDatesIntervals(Services))
@@ -34,7 +34,7 @@ func GenerateCostCSVArray(Services []format.Service) [][]string {
 	return csvArray
 }
 
-func WriteCSV(csvArray [][]string, filepath string) {
+func writeCSV(csvArray [][]string, filepath string) {
 	f, err := os.Create(filepath)
 	if err != nil {
 		log.Fatal(err)
@@ -55,7 +55,7 @@ func WriteCSV(csvArray [][]string, filepath string) {
 
 }
 
-func CSVEvolutionReport(Services []format.Service) [][]string {
+func csvEvolutionReport(Services []format.Service) [][]string {
 	var csvArray [][]string
 	csvArray = append(csvArray, format.FindDatesIntervals(Services).Headers())
 	dates := format.SortDates(format.FindDatesIntervals(Services))
@@ -77,11 +77,11 @@ func (services ServicesArray) initCSV() {
 	flag.Parse()
 
 	if *csvFlag {
-		csvArray := GenerateCostCSVArray(services)
-		WriteCSV(csvArray, "reports.csv")
+		csvArray := generateCostCSVArray(services)
+		writeCSV(csvArray, "reports.csv")
 		if *evolution {
-			evolutionCSVArray := CSVEvolutionReport(services)
-			WriteCSV(evolutionCSVArray, "evolution.csv")
+			evolutionCSVArray := csvEvolutionReport(services)
+			writeCSV(evolutionCSVArray, "evolution.csv")
 		}
 	}
 }

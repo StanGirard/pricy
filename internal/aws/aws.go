@@ -23,7 +23,7 @@ func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
 func InitAWS() []format.Service {
 	// Initialize the session
 	flag.Parse()
-	session := InitSession()
+	session := initSession()
 	costExplorer := createCostExplorer(session)
 
 	// Generating Date
@@ -36,6 +36,6 @@ func InitAWS() []format.Service {
 
 	// uppercase string for the granularity
 	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(*granularity))
-	formatCostUsagebyService := FormatCostUsagebyService(costUsageByService)
+	formatCostUsagebyService := formatCostUsagebyService(costUsageByService)
 	return formatCostUsagebyService
 }

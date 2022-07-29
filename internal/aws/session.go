@@ -30,7 +30,7 @@ func createSessionWithSSO() *session.Session {
 	return sess
 }
 
-func InitSession() *session.Session {
+func initSession() *session.Session {
 	// Create a new session that the SDK will use to load
 	// credentials from. With either SSO or credentials
 	flag.Parse()

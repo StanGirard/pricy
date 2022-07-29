@@ -40,7 +40,7 @@ func getCostUsageByService(costExplorer *costexplorer.CostExplorer, start, end s
 
 }
 
-func FormatCostUsagebyService(cost *costexplorer.GetCostAndUsageOutput) []format.Service {
+func formatCostUsagebyService(cost *costexplorer.GetCostAndUsageOutput) []format.Service {
 	var services []format.Service
 	for _, result := range cost.ResultsByTime {
 		for _, group := range result.Groups {
