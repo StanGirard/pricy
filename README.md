@@ -30,6 +30,7 @@ There are a couple of parameters that you can use
 - `--days`: Number of days to look back for
 - `--interval`: Date Interval on which the report is generated (Default last 14 days) (Format: YYYY-MM-DD:YYYY-MM-DD)
 - `--granularity`: Granularity of the report, can be `daily`,  `monthly`
+- `--html`: Output the report as html to `pricy.html`
 
 ## Example
 

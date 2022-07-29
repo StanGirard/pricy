@@ -21,11 +21,11 @@ func generateCostCSVArray(Services []format.Service) [][]string {
 	csvArray = append(csvArray, format.FindDatesIntervals(Services).Headers())
 	dates := format.SortDates(format.FindDatesIntervals(Services))
 	sort.Slice(Services, func(i, j int) bool {
-		return Services[i].Service < Services[j].Service
+		return Services[i].Name < Services[j].Name
 	})
 	for _, service := range Services {
 		var csvRow []string
-		csvRow = append(csvRow, service.Service)
+		csvRow = append(csvRow, service.Name)
 		for _, date := range dates {
 			csvRow = append(csvRow, fmt.Sprintf("%.2f", service.DatePrice[date]))
 		}
@@ -42,11 +42,6 @@ func writeCSV(csvArray [][]string, filepath string) {
 
 	defer f.Close()
 
-	if err != nil {
-
-		log.Fatalln("failed to open file", err)
-	}
-
 	w := csv.NewWriter(f)
 	writeError := w.WriteAll(csvArray)
 	if writeError != nil {
@@ -60,11 +55,11 @@ func csvEvolutionReport(Services []format.Service) [][]string {
 	csvArray = append(csvArray, format.FindDatesIntervals(Services).Headers())
 	dates := format.SortDates(format.FindDatesIntervals(Services))
 	sort.Slice(Services, func(i, j int) bool {
-		return Services[i].Service < Services[j].Service
+		return Services[i].Name < Services[j].Name
 	})
 	for _, service := range Services {
 		var csvRow []string
-		csvRow = append(csvRow, service.Service)
+		csvRow = append(csvRow, service.Name)
 		for _, date := range dates {
 			csvRow = append(csvRow, fmt.Sprintf("%.2f", service.PriceEvolution[date]))
 		}

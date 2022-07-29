@@ -27,7 +27,7 @@ func (Services Services) printCost() {
 
 		var pricesByDate priceToDateArray
 		for _, service := range Services {
-			pricesByDate = append(pricesByDate, priceToDate{Name: service.Service, Price: service.DatePrice[date]})
+			pricesByDate = append(pricesByDate, priceToDate{Name: service.Name, Price: service.DatePrice[date]})
 		}
 		sort.Slice(pricesByDate, func(i, j int) bool {
 			return pricesByDate[i].Price > pricesByDate[j].Price
@@ -59,4 +59,5 @@ func InitReport(services Services) {
 	services.calculateEvolution()
 	services.printCost()
 	services.initCSV()
+	services.initHTML()
 }

@@ -7,8 +7,8 @@ import (
 
 var mockServices Services = []Service{
 	{
-		Service: "Amazon",
-		Units:   "USD",
+		Name:  "Amazon",
+		Units: "USD",
 		DatePrice: map[DateInterval]float64{
 			{Start: "2019-01-01", End: "2019-01-31"}: 10.0,
 			{Start: "2019-02-01", End: "2019-02-28"}: 20.0,
@@ -17,8 +17,8 @@ var mockServices Services = []Service{
 		},
 		PriceEvolution: map[DateInterval]float64{},
 	}, {
-		Service: "Amazon2",
-		Units:   "USD",
+		Name:  "Amazon2",
+		Units: "USD",
 		DatePrice: map[DateInterval]float64{
 			{Start: "2019-01-01", End: "2019-01-31"}: 10.0,
 			{Start: "2019-02-01", End: "2019-02-28"}: 20.0,

@@ -8,7 +8,7 @@ type DateInterval struct {
 type DateIntervals []DateInterval
 
 type Service struct {
-	Service        string
+	Name           string
 	Units          string
 	Account        string
 	DatePrice      map[DateInterval]float64

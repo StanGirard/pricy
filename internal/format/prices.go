@@ -21,14 +21,14 @@ var UnitsToSymbol = map[string]string{
 
 func AddServices(Services []Service, service, units string, Date DateInterval, price float64) []Service {
 	for _, serv := range Services {
-		if serv.Service == service {
+		if serv.Name == service {
 			serv.DatePrice[Date] = price
 			return Services
 		}
 	}
 	Services = append(Services, Service{
-		Service: service,
-		Units:   units,
+		Name:  service,
+		Units: units,
 		DatePrice: map[DateInterval]float64{
 			Date: price,
 		},
