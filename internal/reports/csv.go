@@ -18,9 +18,14 @@ var (
 func GenerateHeader(dates []format.DateInterval) []string {
 	var header []string
 	header = append(header, "Service")
+	var datesHeader []string
 	for _, date := range dates {
-		header = append(header, date.Start)
+		datesHeader = append(datesHeader, date.Start)
 	}
+	sort.Slice(datesHeader, func(i, j int) bool {
+		return datesHeader[i] < datesHeader[j]
+	})
+	header = append(header, datesHeader...)
 	return header
 }
 
