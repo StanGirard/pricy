@@ -12,28 +12,32 @@ var (
 	details = flag.Bool("details", false, "print details")
 )
 
-type PriceToDate struct {
+type priceToDate struct {
 	Name  string
 	Price float64
 }
 
-func PrintCostByService(Services []format.Service) {
-	allDates := format.SortDates(format.FindAllDateIntervals(Services))
+type priceToDateArray []priceToDate
+
+type ServicesArray []format.Service
+
+func (Services ServicesArray) printCost() {
+	allDates := format.SortDates(format.FindDatesIntervals(Services))
 	fmt.Println("Lenght of all dates:", len(allDates))
 	for _, date := range allDates {
 
-		var serviceToDate []PriceToDate
+		var pricesByDate priceToDateArray
 		for _, service := range Services {
-			serviceToDate = append(serviceToDate, PriceToDate{Name: service.Service, Price: service.DatePrice[date]})
+			pricesByDate = append(pricesByDate, priceToDate{Name: service.Service, Price: service.DatePrice[date]})
 		}
-		sort.Slice(serviceToDate, func(i, j int) bool {
-			return serviceToDate[i].Price > serviceToDate[j].Price
+		sort.Slice(pricesByDate, func(i, j int) bool {
+			return pricesByDate[i].Price > pricesByDate[j].Price
 		})
 
-		totalCost := GetCostByDateAllServices(serviceToDate)
+		totalCost := pricesByDate.getCostByDate()
 		fmt.Printf("%s: %.2f%s \n", date.String(), totalCost, format.UnitsToSymbol[Services[0].Units])
 		if *details {
-			for _, service := range serviceToDate {
+			for _, service := range pricesByDate {
 				fmt.Printf("\t%s: %.2f%s\n", service.Name, service.Price, format.UnitsToSymbol[Services[0].Units])
 			}
 		}
@@ -42,7 +46,7 @@ func PrintCostByService(Services []format.Service) {
 
 }
 
-func GetCostByDateAllServices(costByDate []PriceToDate) float64 {
+func (costByDate priceToDateArray) getCostByDate() float64 {
 	var total float64
 	for _, service := range costByDate {
 		total += service.Price
@@ -51,11 +55,9 @@ func GetCostByDateAllServices(costByDate []PriceToDate) float64 {
 	return float64(int(total*100)) / 100
 }
 
-func GenerateReport(costByServices []format.Service) {
+func GenerateReport(services ServicesArray) {
 	flag.Parse()
-	GenerateEvolutionFromPreviousDate(costByServices)
-	PrintCostByService(costByServices)
-	GenerateCSVReport(costByServices)
-	GenerateEvolutionFromPreviousDate(costByServices)
-
+	services.calculateEvolution()
+	services.printCost()
+	services.initCSV()
 }

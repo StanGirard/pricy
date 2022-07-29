@@ -1,10 +1,33 @@
 package format
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 type DateInterval struct {
 	Start string `json:"start"`
 	End   string `json:"end"`
+}
+
+type DateIntervalArray []DateInterval
+
+func (dates DateIntervalArray) Headers() []string {
+	var headers []string
+
+	headers = append(headers, "Service")
+
+	var datesHeader []string
+	for _, date := range dates {
+		datesHeader = append(datesHeader, date.Start)
+	}
+
+	sort.Slice(datesHeader, func(i, j int) bool {
+		return datesHeader[i] < datesHeader[j]
+	})
+
+	headers = append(headers, datesHeader...)
+	return headers
 }
 
 func (d DateInterval) GetStartDate() string {

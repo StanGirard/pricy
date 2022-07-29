@@ -8,6 +8,8 @@ type Service struct {
 	PriceEvolution map[DateInterval]float64
 }
 
+type ServicesArray []Service
+
 func AddServices(servicesArray []Service, service, units string, Date DateInterval, price float64) []Service {
 	for _, serv := range servicesArray {
 		if serv.Service == service {
@@ -45,7 +47,7 @@ var UnitsToSymbol = map[string]string{
 	"TRY": "₺",
 }
 
-func FindAllDateIntervals(services []Service) []DateInterval {
+func FindDatesIntervals(services []Service) DateIntervalArray {
 	var dates []DateInterval
 	for _, service := range services {
 		for date := range service.DatePrice {
