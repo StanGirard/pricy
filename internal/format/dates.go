@@ -5,14 +5,7 @@ import (
 	"sort"
 )
 
-type DateInterval struct {
-	Start string `json:"start"`
-	End   string `json:"end"`
-}
-
-type DateIntervalArray []DateInterval
-
-func (dates DateIntervalArray) Headers() []string {
+func (dates DateIntervals) Headers() []string {
 	var headers []string
 
 	headers = append(headers, "Service")

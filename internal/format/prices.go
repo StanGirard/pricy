@@ -1,15 +1,5 @@
 package format
 
-type Service struct {
-	Service        string
-	Units          string
-	Account        string
-	DatePrice      map[DateInterval]float64
-	PriceEvolution map[DateInterval]float64
-}
-
-type ServicesArray []Service
-
 func AddServices(servicesArray []Service, service, units string, Date DateInterval, price float64) []Service {
 	for _, serv := range servicesArray {
 		if serv.Service == service {
@@ -47,7 +37,7 @@ var UnitsToSymbol = map[string]string{
 	"TRY": "₺",
 }
 
-func FindDatesIntervals(services []Service) DateIntervalArray {
+func FindDatesIntervals(services []Service) DateIntervals {
 	var dates []DateInterval
 	for _, service := range services {
 		for date := range service.DatePrice {

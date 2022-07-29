@@ -1,24 +1,23 @@
 package format
 
+type DateInterval struct {
+	Start string `json:"start"`
+	End   string `json:"end"`
+}
+
+type DateIntervals []DateInterval
+
+type Service struct {
+	Service        string
+	Units          string
+	Account        string
+	DatePrice      map[DateInterval]float64
+	PriceEvolution map[DateInterval]float64
+}
+
+type ServicesArray []Service
+
 type TotalPerDay struct {
 	Date      DateInterval
 	TotalCost float64
-}
-
-func TotalCostUsage(Services []Service) []TotalPerDay {
-	var TotalPerDays []TotalPerDay
-	for _, service := range Services {
-		for date, price := range service.DatePrice {
-			for i := range TotalPerDays {
-				if TotalPerDays[i].Date.Start == date.Start && TotalPerDays[i].Date.End == date.End {
-					TotalPerDays[i].TotalCost += price
-					break
-				} else {
-					TotalPerDays = append(TotalPerDays, TotalPerDay{Date: date, TotalCost: price})
-					break
-				}
-			}
-		}
-	}
-	return TotalPerDays
 }
