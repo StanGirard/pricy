@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"text/template"
+	"time"
 
 	"github.com/stangirard/pricy/internal/format"
 )
@@ -25,6 +26,9 @@ var headerTmpl string
 //go:embed templates/page.tmpl
 var pageTmpl string
 
+//go:embed templates/style.tmpl
+var styleTmpl string
+
 //go
 
 var (
@@ -38,14 +42,24 @@ func getPriceForDateService(service format.Service, date format.DateInterval) fl
 	return fl
 }
 
+func niceDate(date string) string {
+	t, _ := time.Parse("2006-01-02", date)
+	return t.Format("02/01")
+
+}
+
 func (services Services) generateHTML() string {
 	dates := format.SortDates(format.FindDatesIntervals(services))
 	// Create a template containing contentTmpl and footerTmpl and headerTmpl and pageTmpl
-	tmpl, err := template.New("content").Funcs(template.FuncMap{"getPrice": getPriceForDateService}).Parse(contentTmpl)
+	tmpl, err := template.New("content").Funcs(template.FuncMap{"getPrice": getPriceForDateService, "niceDate": niceDate}).Parse(contentTmpl)
 	if err != nil {
 		log.Fatal(err)
 	}
 	tmpl, err = tmpl.New("footer").Parse(footerTmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tmpl, err = tmpl.New("style").Parse(styleTmpl)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -66,7 +80,7 @@ func (services Services) generateHTML() string {
 		Dates    []format.DateInterval
 		Services []format.Service
 	}{
-		Title:    "Pricy",
+		Title:    "Cost of services",
 		Dates:    dates,
 		Services: services,
 	})

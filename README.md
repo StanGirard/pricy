@@ -34,26 +34,14 @@ There are a couple of parameters that you can use
 
 ## Example
 
-### Report Generation
+### HTML Report Generation 
 
 ```bash
-pricy --sso --granularity monthly --details
+pricy --sso --days 150 --granularity monthly --html
 ```
 
-Generates a report for the price since the beginning last week with granularity of a month
+Generates a report for the price starting a 150 days ago
 
 <p align="center">
-<img src="docs/aws-reports-granularity-month-details.png" alt="aws-reports-granularity-month-details" width="40%">
-<p align="center">
-
-### CSV Generation
-
-```bash
-pricy --sso --granularity monthly --month  --csv
-```
-
-Generates a csv report for the price  from one month ago
-
-<p align="center">
-<img src="docs/csv-aws-reports-granularity-month-details-month.png" alt="csv-aws-reports-granularity-month-details-month" width="40%">
+<img src="docs/html-report.png" alt="html-report" width="40%">
 <p align="center">

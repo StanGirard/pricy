@@ -1,10 +1,10 @@
 {{define "content" -}}
 {{ $Services := .Services }}
 {{ $Dates := .Dates }}
-<div class="containers">
+<div class="card-container">
     <h3 class="title">{{.Title}} </h3>
-    <table>
-    <tr><th>Service</th>{{range .Dates}}<th>{{.Start}}</th>{{end}}
+    <table class="styled-table">
+    <tr><th>Service</th>{{range .Dates}}<th>{{$y:= niceDate .Start}}{{$y}}</th>{{end}}
     {{range $Services := $Services }}
     <tr><td>{{$Services.Name}}</td>
         {{range $Dates := $Dates}}
