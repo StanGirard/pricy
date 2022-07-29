@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stangirard/pricy/internal/aws"
+	"github.com/stangirard/pricy/internal/pricy"
 )
 
 var (
@@ -31,8 +31,10 @@ func run() error {
 		return nil
 	}
 
-	session := aws.InitSession()
-	aws.InitCostExplorer(session)
+	err := pricy.Run()
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

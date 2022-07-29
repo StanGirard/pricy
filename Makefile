@@ -8,7 +8,7 @@ help: Makefile
 
 ## build: Build tfautomv binary
 .PHONY: build
-build: fmt vet
+build: fmt vet lint
 	go build -o bin/pricy
 
 ## fmt: Format source code
@@ -20,6 +20,11 @@ fmt:
 .PHONY: vet
 vet:
 	go vet ./...
+
+## lint: Lint source code
+.PHONY: lint
+lint:
+	golangci-lint run
 
 ## test: Run unit tests
 .PHONY: test

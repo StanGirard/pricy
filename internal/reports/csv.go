@@ -36,6 +36,10 @@ func GenerateCostCSVArray(Services []format.Service) [][]string {
 
 func WriteCSV(csvArray [][]string, filepath string) {
 	f, err := os.Create(filepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	defer f.Close()
 
 	if err != nil {
@@ -44,7 +48,10 @@ func WriteCSV(csvArray [][]string, filepath string) {
 	}
 
 	w := csv.NewWriter(f)
-	w.WriteAll(csvArray)
+	writeError := w.WriteAll(csvArray)
+	if writeError != nil {
+		log.Fatalln("failed to write to csv file", err)
+	}
 
 }
 

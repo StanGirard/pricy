@@ -55,7 +55,7 @@ func (costByDate priceToDateArray) getCostByDate() float64 {
 	return float64(int(total*100)) / 100
 }
 
-func GenerateReport(services ServicesArray) {
+func InitReport(services ServicesArray) {
 	flag.Parse()
 	services.calculateEvolution()
 	services.printCost()

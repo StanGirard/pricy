@@ -8,7 +8,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/costexplorer"
 	"github.com/stangirard/pricy/internal/format"
 	"github.com/stangirard/pricy/internal/helpers"
-	"github.com/stangirard/pricy/internal/reports"
 )
 
 var (
@@ -21,9 +20,10 @@ func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
 	return costexplorer.New(sess)
 }
 
-func InitCostExplorer(session *session.Session) {
+func InitAWS() []format.Service {
 	// Initialize the session
 	flag.Parse()
+	session := InitSession()
 	costExplorer := createCostExplorer(session)
 
 	// Generating Date
@@ -37,5 +37,5 @@ func InitCostExplorer(session *session.Session) {
 	// uppercase string for the granularity
 	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(*granularity))
 	formatCostUsagebyService := FormatCostUsagebyService(costUsageByService)
-	reports.GenerateReport(formatCostUsagebyService)
+	return formatCostUsagebyService
 }
