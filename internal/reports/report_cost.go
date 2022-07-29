@@ -19,6 +19,7 @@ type PriceToDate struct {
 
 func PrintCostByService(Services []format.Service) {
 	allDates := format.SortDates(format.FindAllDateIntervals(Services))
+	fmt.Println("Lenght of all dates:", len(allDates))
 	for _, date := range allDates {
 
 		var serviceToDate []PriceToDate

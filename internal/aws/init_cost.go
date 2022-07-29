@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	date        = flag.String("date", "", "date to get cost usage")
-	month       = flag.Bool("month", false, "get cost usage for month")
 	granularity = flag.String("granularity", "DAILY", "granularity to get cost usage")
+	days        = flag.Int("days", 14, "get cost usage for last 14 days")
+	interval    = flag.String("interval", "", "get cost usage for a specific interval as '2022-03-30:2022-03-31' ")
 )
 
 func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
@@ -23,15 +23,17 @@ func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
 
 func InitCostExplorer(session *session.Session) {
 	// Initialize the session
+	flag.Parse()
 	costExplorer := createCostExplorer(session)
 
 	// Generating Date
 	var dateInterval format.DateInterval
-	if *month {
-		dateInterval = helpers.FromLastMonthToNow()
+	if interval == nil || *interval == "" {
+		dateInterval = helpers.DaysInterval(*days)
 	} else {
-		dateInterval = helpers.FromLastWeekToNow()
+		dateInterval = helpers.ParseInterval(*interval)
 	}
+
 	// uppercase string for the granularity
 	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(*granularity))
 	formatCostUsagebyService := FormatCostUsagebyService(costUsageByService)

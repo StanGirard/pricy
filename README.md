@@ -23,12 +23,13 @@ pricy --sso
 ## Usage
 
 There are a couple of parameters that you can use
-- `--month`: Run the report for last month instead of last week
 - `--details`: Show the details of the report with the pricing by service
 - `--sso`: Use sso for credentials
 - `--csv`: Output the report as csv to `reports.csv`
+- `--evolution`: Show the evolution of the report as `evolution.csv`
+- `--days`: Number of days to look back for
+- `--interval`: Date Interval on which the report is generated (Default last 14 days) (Format: YYYY-MM-DD:YYYY-MM-DD)
 - `--granularity`: Granularity of the report, can be `daily`,  `monthly`
-- `--evolution`: Show the evolution of the report
 
 ## Example
 
