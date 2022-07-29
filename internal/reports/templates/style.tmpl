@@ -1,15 +1,17 @@
 {{define "style"}}
 <style>
 .card-container {
-  padding: 12px;
+  padding-bottom: 10px;
+  overflow-x: scroll;
+  width: 100%;
 }
 .styled-table {
     border-collapse: collapse;
-    margin: 10px 0;
+    padding: 10px 0;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
 }
 .styled-table thead tr {
     background-color: #009879;
@@ -19,7 +21,15 @@
 .styled-table th,
 .styled-table td {
     padding: 7px 10px;
+    border-bottom: dashed #888 1px;
 }
+.styled-table td:first-child,
+.styled-table th:first-child {
+  position: sticky;
+  left: 0;
+  background-color: #ddd;
+}
+
 .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
 }
@@ -28,15 +38,13 @@
     background-color: #f3f3f3;
 }
 
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
+
 
 
 
 
 h1 {
-	margin: 5px;
+	margin: 10px;
 	color: #343434;
 	font-weight: normal;
 	font-family: 'Ultra', sans-serif;   
@@ -53,6 +61,17 @@ h2 {
 h3 {
     font-size: 24px;
     line-height: 40px;
+}
+
+details {
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+details summary {
+    font-size: 30px;
+    line-height: 40px;
+    margin: 8px;
 }
 
 

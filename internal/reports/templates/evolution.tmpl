@@ -2,8 +2,9 @@
 {{ $Services := .Services }}
 {{ $Dates := .Dates }}
 {{ if .Evolution }}
+<details>
+  <summary> Evolution of Price </summary>
 <div class="card-container">
-    <h3 class="title">Evolution of Price </h3>
     <table class="styled-table">
     <tr><th>Service</th>{{range .Dates}}<th>{{$y:= niceDate .Start}}{{$y}}</th>{{end}}
     {{range $Services := $Services }}
@@ -16,6 +17,7 @@
     {{end}}
     </table>
 </div>
+</details>
 {{end}}
 {{end}}
 

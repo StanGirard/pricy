@@ -86,6 +86,7 @@ func createTemplate() (*template.Template, error) {
 
 func (services Services) generateHTML() string {
 	dates := format.SortDates(format.FindDatesIntervals(services))
+
 	// Create a template containing contentTmpl and footerTmpl and headerTmpl and pageTmpl
 	tmpl, err := createTemplate()
 	if err != nil {
