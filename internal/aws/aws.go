@@ -12,7 +12,7 @@ import (
 
 var (
 	granularity = flag.String("granularity", "DAILY", "granularity to get cost usage")
-	days        = flag.Int("days", 14, "get cost usage for last 14 days")
+	Days        = flag.Int("days", 14, "get cost usage for last 14 days")
 	interval    = flag.String("interval", "", "get cost usage for a specific interval as '2022-03-30:2022-03-31' ")
 )
 
@@ -29,7 +29,7 @@ func InitAWS() []format.Service {
 	// Generating Date
 	var dateInterval format.DateInterval
 	if interval == nil || *interval == "" {
-		dateInterval = helpers.DaysInterval(*days)
+		dateInterval = helpers.DaysInterval(*Days)
 	} else {
 		var err error
 		dateInterval, err = helpers.ParseInterval(*interval)
