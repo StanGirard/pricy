@@ -1,4 +1,4 @@
-package pricy
+package cmd
 
 import (
 	"flag"

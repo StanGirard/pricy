@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stangirard/pricy/internal/pricy"
+	"github.com/stangirard/pricy/internal/cmd"
 )
 
 var (
@@ -31,7 +31,7 @@ func run() error {
 		return nil
 	}
 
-	if err := pricy.Execute(); err != nil {
+	if err := cmd.Execute(); err != nil {
 		return err
 	}
 
