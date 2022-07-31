@@ -31,8 +31,7 @@ func run() error {
 		return nil
 	}
 
-	err := pricy.Run()
-	if err != nil {
+	if err := pricy.Execute(); err != nil {
 		return err
 	}
 
