@@ -6,18 +6,13 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/stangirard/pricy/internal/aws"
 	"github.com/stangirard/pricy/internal/format"
-)
-
-var (
-// map of gauge metrics with service name as key
-
 )
 
 func cleanString(str string) string {
@@ -48,13 +43,14 @@ func cleanString(str string) string {
 
 }
 
-func recordMetrics() {
-	services := aws.InitAWS()
-	gauges := make(map[string]prometheus.Gauge)
+var gauges = make(map[string]prometheus.Gauge)
+
+func recordMetrics(services *[]format.Service, m *sync.Mutex) {
+
 	flag.Set("days", "1")
 	var timer = time.Now()
-
-	for _, service := range services {
+	m.Lock()
+	for _, service := range *services {
 		//Get Dates
 		// Get first date in Service.DatePrice map
 		var firstDate format.DateInterval
@@ -68,35 +64,35 @@ func recordMetrics() {
 		})
 		gauges[service.Name].Set(service.DatePrice[firstDate])
 	}
-
+	m.Unlock()
 	go func() {
 		for {
-			if time.Since(timer).Seconds() > 28800 {
+
+			if time.Since(timer).Seconds() > 60 {
+				m.Lock()
+				fmt.Println("Updating Metrics at " + time.Now().Format("2006-01-02 15:04:05"))
 				timer = time.Now()
-				services = aws.InitAWS()
-				fmt.Println("Time: " + time.Now().Format("2006-01-02 15:04:05"))
-				for _, service := range services {
+				for _, service := range *services {
 					// Update prometheus gauge
 					var firstDate format.DateInterval
 					for date := range service.DatePrice {
 						firstDate = date
 						break
 					}
+
 					gauges[service.Name].Set(service.DatePrice[firstDate])
 
-					fmt.Println("Updated gauge for " + cleanString(service.Name))
-
 				}
+				m.Unlock()
+				time.Sleep(10 * time.Second)
 
 			}
-			time.Sleep(10 * time.Second)
-			fmt.Println("Time since last update: " + time.Since(timer).String())
 		}
 	}()
 }
 
-func RunProm() {
-	recordMetrics()
+func Execute(services *[]format.Service, m *sync.Mutex) {
+	recordMetrics(services, m)
 
 	http.Handle("/metrics", promhttp.Handler())
 	http.ListenAndServe(":2112", nil)

@@ -20,7 +20,7 @@ func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
 	return costexplorer.New(sess)
 }
 
-func InitAWS() []format.Service {
+func Execute() []format.Service {
 	// Initialize the session
 	flag.Parse()
 	session := initSession()
