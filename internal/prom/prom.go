@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -42,12 +43,14 @@ func cleanString(str string) string {
 
 }
 
-func recordMetrics(services *[]format.Service) {
-	gauges := make(map[string]prometheus.Gauge)
+var gauges = make(map[string]prometheus.Gauge)
+
+func recordMetrics(services **[]format.Service, m *sync.Mutex) {
 
 	flag.Set("days", "1")
 	var timer = time.Now()
-	for _, service := range *services {
+	m.Lock()
+	for _, service := range **services {
 		//Get Dates
 		// Get first date in Service.DatePrice map
 		var firstDate format.DateInterval
@@ -61,32 +64,35 @@ func recordMetrics(services *[]format.Service) {
 		})
 		gauges[service.Name].Set(service.DatePrice[firstDate])
 	}
-
+	m.Unlock()
 	go func() {
 		for {
 
 			if time.Since(timer).Seconds() > 5 {
-				fmt.Println("Updating prices")
+				m.Lock()
+				fmt.Println("Recording metrics")
 				timer = time.Now()
-				for _, service := range *services {
+				for _, service := range **services {
 					// Update prometheus gauge
 					var firstDate format.DateInterval
 					for date := range service.DatePrice {
 						firstDate = date
 						break
 					}
+					fmt.Println("Updating gauge for " + service.Name)
 					fmt.Println(service.Name, service.DatePrice[firstDate])
 					gauges[service.Name].Set(service.DatePrice[firstDate])
 
 				}
+				m.Unlock()
 
 			}
 		}
 	}()
 }
 
-func Execute(services *[]format.Service) {
-	recordMetrics(services)
+func Execute(services **[]format.Service, m *sync.Mutex) {
+	recordMetrics(services, m)
 
 	http.Handle("/metrics", promhttp.Handler())
 	http.ListenAndServe(":2112", nil)
