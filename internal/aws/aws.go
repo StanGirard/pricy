@@ -10,17 +10,11 @@ import (
 	"github.com/stangirard/pricy/internal/helpers"
 )
 
-var (
-	granularity = flag.String("granularity", "DAILY", "granularity to get cost usage")
-	Days        = flag.Int("days", 14, "get cost usage for last 14 days")
-	interval    = flag.String("interval", "", "get cost usage for a specific interval as '2022-03-30:2022-03-31' ")
-)
-
 func createCostExplorer(sess *session.Session) *costexplorer.CostExplorer {
 	return costexplorer.New(sess)
 }
 
-func Execute() []format.Service {
+func Execute(configuration format.Configuration) []format.Service {
 	// Initialize the session
 	flag.Parse()
 	session := initSession()
@@ -28,18 +22,18 @@ func Execute() []format.Service {
 
 	// Generating Date
 	var dateInterval format.DateInterval
-	if interval == nil || *interval == "" {
-		dateInterval = helpers.DaysInterval(*Days)
+	if configuration.Interval == "" {
+		dateInterval = helpers.DaysInterval(configuration.Days)
 	} else {
 		var err error
-		dateInterval, err = helpers.ParseInterval(*interval)
+		dateInterval, err = helpers.ParseInterval(configuration.Interval)
 		if err != nil {
 			panic(err)
 		}
 	}
 
 	// uppercase string for the granularity
-	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(*granularity))
+	costUsageByService := getCostUsageByService(costExplorer, dateInterval.Start, dateInterval.End, strings.ToUpper(configuration.Granularity))
 	formatCostUsagebyService := formatCostUsagebyService(costUsageByService)
 	return formatCostUsagebyService
 }

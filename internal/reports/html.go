@@ -106,7 +106,6 @@ func (services Services) generateHTML() string {
 		Services:  services,
 		Evolution: *evolution,
 	})
-	fmt.Println("Evolution : ", *evolution)
 	return processed.String()
 
 }

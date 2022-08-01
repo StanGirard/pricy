@@ -35,6 +35,7 @@ func cleanString(str string) string {
 	str = strings.Replace(str, "}", "", -1)
 	str = strings.Replace(str, "=", "", -1)
 	str = strings.Replace(str, "-", "_", -1)
+	str = strings.Replace(str, "/", "_", -1)
 	str = strings.ToLower(str)
 	space := regexp.MustCompile(`_+`)
 	str = space.ReplaceAllString(str, "_")
