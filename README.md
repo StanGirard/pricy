@@ -22,9 +22,19 @@ pricy --sso
 
 ## Usage
 
+### Cloud Providers
+
+These are the flags required for enabling a cloud provider
+- `--aws` - Enable AWS
+  - `--sso`: Use sso for credentials for `aws`
+- `--azure` - Enable Azure
+  - `subscription`: Azure subscription id you want the report to be generated for
+
+### Flags for configuration
+
 There are a couple of parameters that you can use
 - `--details`: Show the details of the report with the pricing by service
-- `--sso`: Use sso for credentials
+
 - `--csv`: Output the report as csv to `reports.csv`
 - `--evolution`: Show the evolution of the report as `evolution.csv`
 - `--days`: Number of days to look back for
@@ -38,7 +48,7 @@ There are a couple of parameters that you can use
 ### HTML Report Generation 
 
 ```bash
-pricy --sso --days 150 --granularity monthly --html
+pricy --aws --sso --days 150 --granularity monthly --html
 ```
 
 Generates a report for the price starting a 150 days ago
