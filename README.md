@@ -34,7 +34,6 @@ These are the flags required for enabling a cloud provider
 
 There are a couple of parameters that you can use
 - `--details`: Show the details of the report with the pricing by service
-
 - `--csv`: Output the report as csv to `reports.csv`
 - `--evolution`: Show the evolution of the report as `evolution.csv`
 - `--days`: Number of days to look back for
@@ -61,7 +60,7 @@ Generates a report for the price starting a 150 days ago
 ### Prometheus Metrics
 
 ```bash
-pricy --sso --prometheus  
+pricy --aws --sso --prometheus  
 ```
 
 Generates the prometheus metrics for the price updating every 8 hours
