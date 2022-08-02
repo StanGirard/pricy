@@ -9,11 +9,13 @@ import (
 	"sort"
 
 	"github.com/stangirard/pricy/internal/format"
+	"github.com/stangirard/pricy/internal/gsheet"
 )
 
 var (
-	csvFlag   = flag.Bool("csv", false, "print in csv format")
-	evolution = flag.Bool("evolution", false, "print evolution report")
+	csvFlag    = flag.Bool("csv", false, "print in csv format")
+	evolution  = flag.Bool("evolution", false, "print evolution report")
+	gsheetFlag = flag.Bool("gsheet", false, "print google sheet metrics")
 )
 
 func generateCostCSVArray(Services []format.Service) [][]string {
@@ -77,6 +79,9 @@ func (services Services) initCSV() {
 		if *evolution {
 			evolutionCSVArray := csvEvolutionReport(services)
 			writeCSV(evolutionCSVArray, "evolution.csv")
+		}
+		if *gsheetFlag {
+			gsheet.Execute(csvArray)
 		}
 	}
 }
