@@ -157,18 +157,132 @@ func Execute(value [][]string) {
 		},
 	}
 
+	var BasicChartSeries []*sheets.BasicChartSeries
+	var HistogramSeries []*sheets.HistogramSeries
+	for i, _ := range new {
+		if i == 0 {
+			continue
+		}
+		BasicChartSeries = append(BasicChartSeries, &sheets.BasicChartSeries{
+			Series: &sheets.ChartData{
+				SourceRange: &sheets.ChartSourceRange{
+					Sources: []*sheets.GridRange{
+						{ //A2:O2
+							SheetId:          1023,
+							StartRowIndex:    int64(i),
+							EndRowIndex:      int64(i + 1),
+							StartColumnIndex: 0,
+							EndColumnIndex:   int64(len(new[i])),
+						},
+					},
+				},
+			},
+		},
+		)
+		HistogramSeries = append(HistogramSeries, &sheets.HistogramSeries{
+			Data: &sheets.ChartData{
+				SourceRange: &sheets.ChartSourceRange{
+					Sources: []*sheets.GridRange{
+						{ //A2:O2
+							SheetId:          1023,
+							StartRowIndex:    int64(i),
+							EndRowIndex:      int64(i + 1),
+							StartColumnIndex: 0,
+							EndColumnIndex:   int64(len(new[i])),
+						},
+					},
+				},
+			},
+		})
+	}
+
 	if *spreadsheet == "" {
 		resp, err := srv.Spreadsheets.Create(rb).Context(ctx).Do()
 		if err != nil {
 			log.Fatalf("Unable to create spreadsheet: %v", err)
 		}
 		*spreadsheet = resp.SpreadsheetId
-		srv.Spreadsheets.BatchUpdate(*spreadsheet, &sheets.BatchUpdateSpreadsheetRequest{
+		_, error := srv.Spreadsheets.BatchUpdate(*spreadsheet, &sheets.BatchUpdateSpreadsheetRequest{
 			Requests: []*sheets.Request{
 				{
 					AddSheet: &sheets.AddSheetRequest{
 						Properties: &sheets.SheetProperties{
-							Title: "Reports",
+							Title:   "Reports",
+							SheetId: 1023,
+						},
+					},
+				},
+				{
+					AddSheet: &sheets.AddSheetRequest{
+						Properties: &sheets.SheetProperties{
+							Title:   "Charts",
+							SheetId: 1024,
+						},
+					},
+				},
+				// {
+				// 	AddChart: &sheets.AddChartRequest{
+				// 		Chart: &sheets.EmbeddedChart{
+				// 			Position: &sheets.EmbeddedObjectPosition{
+				// 				NewSheet: false,
+				// 				OverlayPosition: &sheets.OverlayPosition{
+				// 					AnchorCell: &sheets.GridCoordinate{
+				// 						SheetId:     1024,
+				// 						RowIndex:    1,
+				// 						ColumnIndex: 1,
+				// 					},
+				// 				},
+				// 			},
+				// 			Spec: &sheets.ChartSpec{
+				// 				HistogramChart: &sheets.HistogramChartSpec{
+				// 					Series:     HistogramSeries,
+				// 					BucketSize: float64(len(new)),
+				// 				},
+				// 			},
+				// 		},
+				// 	},
+				// },
+				{
+					AddChart: &sheets.AddChartRequest{
+						Chart: &sheets.EmbeddedChart{
+							Position: &sheets.EmbeddedObjectPosition{
+								NewSheet: false,
+								OverlayPosition: &sheets.OverlayPosition{
+									AnchorCell: &sheets.GridCoordinate{
+										SheetId:     1024,
+										RowIndex:    0,
+										ColumnIndex: 0,
+									},
+									WidthPixels:  1200,
+									HeightPixels: 600,
+								},
+							},
+							Spec: &sheets.ChartSpec{
+								BasicChart: &sheets.BasicChartSpec{
+									HeaderCount:    1,
+									Series:         BasicChartSeries,
+									LegendPosition: "BOTTOM_LEGEND",
+									ChartType:      "COLUMN",
+									StackedType:    "STACKED",
+									Domains: []*sheets.BasicChartDomain{
+										{
+											Domain: &sheets.ChartData{
+												SourceRange: &sheets.ChartSourceRange{
+													Sources: []*sheets.GridRange{
+														{
+															SheetId:          1023,
+															StartRowIndex:    0,
+															EndRowIndex:      1,
+															StartColumnIndex: 0,
+															EndColumnIndex:   int64(len(new[0])),
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},
@@ -179,6 +293,9 @@ func Execute(value [][]string) {
 				},
 			},
 		}).Do()
+		if error != nil {
+			log.Fatalf("Unable to create sheet: %v", error)
+		}
 	}
 
 	// Write reports.csv to the new spreadsheet.
