@@ -45,7 +45,8 @@ There are a couple of parameters that you can use
 
 ## Example
 
-### Generate a Google Spreadshit
+### Generate a Google Spreadsheet
+
 
 You need to export the variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of your json file which contains your OAuth2 credentials.
 In oder to get the credentials, you follow this guide:
