@@ -41,10 +41,12 @@ There are a couple of parameters that you can use
 - `--granularity`: Granularity of the report, can be `daily`,  `monthly`
 - `--html`: Output the report as html to `pricy.html`
 - `--prometheus`: Outputs as prometheus metrics on `http://localhost:2112/metrics` that can be scraped by prometheus
+- `--gsheets`: Outputs the report to a google sheets spreadsheet
 
 ## Example
 
 ### Generate a Google Spreadsheet
+
 
 You need to export the variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of your json file which contains your OAuth2 credentials.
 In oder to get the credentials, you follow this guide:

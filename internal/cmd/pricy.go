@@ -33,6 +33,7 @@ func Execute() error {
 		Days:        *days,
 		Interval:    *interval,
 	}
+
 	services := make([]format.Service, 0)
 	getServices(&services, &m, configuration)
 
