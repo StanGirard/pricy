@@ -19,3 +19,51 @@ func TestHeaders(t *testing.T) {
 		}
 	})
 }
+
+func TestGetStartDate(t *testing.T) {
+	t.Run("TestGetStartDate", func(t *testing.T) {
+		dateInterval := datesIntervals[0]
+		if dateInterval.GetStartDate() != "2018-01-01" {
+			t.Errorf("Expected 2018-01-01, got %s", dateInterval.GetStartDate())
+		}
+	})
+}
+
+func TestGetEndDate(t *testing.T) {
+	t.Run("TestGetEndDate", func(t *testing.T) {
+		dateInterval := datesIntervals[0]
+		if dateInterval.GetEndDate() != "2018-01-02" {
+			t.Errorf("Expected 2018-01-02, got %s", dateInterval.GetEndDate())
+		}
+	})
+}
+
+func TestString(t *testing.T) {
+	t.Run("TestString", func(t *testing.T) {
+		dateInterval := datesIntervals[0]
+		if dateInterval.String() != "2018-01-01 - 2018-01-02" {
+			t.Errorf("Expected 2018-01-01 - 2018-01-02, got %s", dateInterval.String())
+		}
+	})
+}
+
+func TestContainsDateInterval(t *testing.T) {
+	t.Run("TestContainsDateInterval", func(t *testing.T) {
+		dateInterval := DateInterval{Start: "2018-01-01", End: "2018-01-02"}
+		if !ContainsDateInterval(datesIntervals, dateInterval) {
+			t.Errorf("Expected true, got false")
+		}
+	})
+}
+
+func TestSortDates(t *testing.T) {
+	t.Run("TestSortDates", func(t *testing.T) {
+		dates := SortDates(datesIntervals)
+		if dates[0].Start != "2018-01-01" {
+			t.Errorf("Expected 2018-01-01, got %s", dates[0].Start)
+		}
+		if dates[len(dates)-1].End != "2018-01-07" {
+			t.Errorf("Expected 2018-01-07, got %s", dates[len(dates)-1].End)
+		}
+	})
+}

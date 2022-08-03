@@ -8,6 +8,7 @@ require (
 	github.com/Azure/go-autorest/autorest/to v0.4.0
 	github.com/aws/aws-sdk-go v1.44.66
 	github.com/prometheus/client_golang v1.12.2
+	github.com/stretchr/testify v1.7.0
 	golang.org/x/oauth2 v0.0.0-20220722155238-128564f6959c
 	google.golang.org/api v0.90.0
 )
@@ -20,6 +21,7 @@ require (
 	github.com/AzureAD/microsoft-authentication-library-for-go v0.5.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang-jwt/jwt v3.2.1+incompatible // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -30,6 +32,7 @@ require (
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/pkg/browser v0.0.0-20210115035449-ce105d075bb4 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.32.1 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
@@ -42,4 +45,5 @@ require (
 	google.golang.org/genproto v0.0.0-20220801145646-83ce21fca29f // indirect
 	google.golang.org/grpc v1.48.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
