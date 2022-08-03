@@ -64,6 +64,7 @@ func saveToken(path string, token *oauth2.Token) {
 	json.NewEncoder(f).Encode(token)
 }
 
+// An HTTP server used to receive the authorization code from google once the user has accepted the application.
 func httpServerParseResponse() string {
 	// Create a new HTTP server that waits for a request, then parses it and sends a response.
 	// Request is http://localhost:6767/?state=state-token&code=4/0AdQt8qgrpmO_twv6d32zwSKxlSWE6Z4tHwcM6HHlyqWu4UNRJmC6faLYSBODOZ5H0xOlWw&scope=https://www.googleapis.com/auth/spreadsheets
@@ -76,9 +77,6 @@ func httpServerParseResponse() string {
 		if err != nil {
 			log.Print(err)
 		}
-		// Print the request parameters.
-		fmt.Println(r.Form)
-		// Write to w "Token has been received and saved into token.json"
 		fmt.Fprint(w, "Token has been received and saved into token.json, you can close this window.")
 
 		response = r.Form.Get("code")
@@ -104,5 +102,4 @@ func httpServerParseResponse() string {
 
 	log.Println("done.")
 	return response
-
 }

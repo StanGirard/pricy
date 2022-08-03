@@ -11,6 +11,7 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
+// NewSheetService returns a Sheets service used to communicate with Google Sheets.
 func NewSheetService() (*sheets.Service, context.Context) {
 
 	ctx := context.Background()

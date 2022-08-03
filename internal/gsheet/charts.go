@@ -4,6 +4,7 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
+// Creates a basic chart series
 func createBasicChartSeries(values [][]interface{}) []*sheets.BasicChartSeries {
 	var BasicChartSeries []*sheets.BasicChartSeries
 	for i := range values {
@@ -29,6 +30,7 @@ func createBasicChartSeries(values [][]interface{}) []*sheets.BasicChartSeries {
 	return BasicChartSeries
 }
 
+// Creates Histograms series used to populate the histogram chart later on
 func createHistogramSeries(values [][]interface{}) []*sheets.HistogramSeries {
 	var HistogramSeries []*sheets.HistogramSeries
 	for i := range values {
@@ -54,6 +56,7 @@ func createHistogramSeries(values [][]interface{}) []*sheets.HistogramSeries {
 	return HistogramSeries
 }
 
+// Creates a basic chart specification
 func createBasicChartSpec(legendPosition, chartype, stackedType string, sourceSheetId int64, values [][]interface{}, basicChartSeries []*sheets.BasicChartSeries) *sheets.BasicChartSpec {
 	var BasicChartSpec *sheets.BasicChartSpec
 	BasicChartSpec = &sheets.BasicChartSpec{

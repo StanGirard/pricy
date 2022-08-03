@@ -11,6 +11,7 @@ var (
 	spreadsheet = flag.String("spreadsheet", "", "The ID of the spreadsheet to write to.")
 )
 
+// Execute is the main function of the gsheet package.
 func Execute(value [][]string) {
 	flag.Parse()
 
@@ -35,7 +36,7 @@ func Execute(value [][]string) {
 	addSheet(srv, *spreadsheet, "Charts", 1024)
 
 	// Write the value variable to the new spreadsheet.
-	writeCSVToSheet(ctx, srv, *spreadsheet, dataSpreadsheet)
+	writeData(ctx, srv, *spreadsheet, dataSpreadsheet)
 
 	// Create BasicChart Series
 	chartSpecs := createBasicChartSpec("BOTTOM_LEGEND", "COLUMN", "STACKED", 1023, dataSpreadsheet, BasicChartSeries)

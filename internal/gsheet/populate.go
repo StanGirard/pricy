@@ -9,9 +9,15 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
+// Creates the spreadsheet configuration
+// Mostly used for setting the title of the spreadsheet that will be created
 func createSpreadSheetConfig() *sheets.Spreadsheet {
+	// Generate the random time
 	var timeNowString = time.Now().Format("2006-01-02-15-04-05")
 	title := "Pricy-Report-" + timeNowString
+
+	// Create the spreadsheet configuration
+	// Can be customed further to set the title, etc.
 	rb := &sheets.Spreadsheet{
 		Properties: &sheets.SpreadsheetProperties{
 			Title: title,
@@ -20,6 +26,8 @@ func createSpreadSheetConfig() *sheets.Spreadsheet {
 	return rb
 }
 
+// Makes a BatchUpdateRequest to add a sheet to the spreadsheet
+// Takes the spreadsheet service, the spreadsheet id, the sheet title and the sheet index
 func addSheet(service *sheets.Service, spreadsheetId, name string, idSheet int64) {
 	_, error := service.Spreadsheets.BatchUpdate(*spreadsheet, &sheets.BatchUpdateSpreadsheetRequest{
 		Requests: []*sheets.Request{
@@ -40,6 +48,9 @@ func addSheet(service *sheets.Service, spreadsheetId, name string, idSheet int64
 	fmt.Println("Sheet added: ", name)
 }
 
+// Adds a basic Chart to the spreadsheet
+//
+// Takes the spreadsheet service, the spreadsheet id, the sheet title and the sheet index to which the chart will be added and the specs of the chart
 func addChart(service *sheets.Service, spreadsheetId string, idSheetToAddTo int64, specs *sheets.BasicChartSpec) {
 	_, error := service.Spreadsheets.BatchUpdate(*spreadsheet, &sheets.BatchUpdateSpreadsheetRequest{
 		Requests: []*sheets.Request{
@@ -73,6 +84,8 @@ func addChart(service *sheets.Service, spreadsheetId string, idSheetToAddTo int6
 	fmt.Println("Chart added")
 }
 
+// Delete a sheet
+// Takes the spreadsheet service, the spreadsheet id and the sheet id to delete
 func deleteSheet(service *sheets.Service, spreadsheetId string, sheetId int64) {
 	_, error := service.Spreadsheets.BatchUpdate(*spreadsheet, &sheets.BatchUpdateSpreadsheetRequest{
 		Requests: []*sheets.Request{
@@ -90,7 +103,9 @@ func deleteSheet(service *sheets.Service, spreadsheetId string, sheetId int64) {
 	fmt.Println("Default sheet deleted")
 }
 
-func writeCSVToSheet(context context.Context, service *sheets.Service, spreadsheetId string, data [][]interface{}) {
+// Populate the spreadsheet with the data
+// The Data must be an array of arrays
+func writeData(context context.Context, service *sheets.Service, spreadsheetId string, data [][]interface{}) {
 	valuesRanges := make([]*sheets.ValueRange, len(data))
 	valuesRanges = append(valuesRanges, &sheets.ValueRange{
 		MajorDimension: "ROWS",
@@ -112,6 +127,7 @@ func writeCSVToSheet(context context.Context, service *sheets.Service, spreadshe
 	fmt.Println("Sheet populated")
 }
 
+// Create a new empty spreadshit
 func createSpreadsheet(service *sheets.Service, config *sheets.Spreadsheet, ctx context.Context) string {
 	resp, err := service.Spreadsheets.Create(config).Context(ctx).Do()
 	if err != nil {
