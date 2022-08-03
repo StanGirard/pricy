@@ -18,6 +18,7 @@ var service = format.Service{
 		{Start: "2019-02-01", End: "2019-02-28"}: 0.0,
 		{Start: "2019-03-01", End: "2019-03-31"}: 0.0,
 		{Start: "2019-04-01", End: "2019-04-30"}: 0.1,
+		{Start: "2019-05-01", End: "2019-05-31"}: 0.2,
 	},
 	PriceEvolution: map[format.DateInterval]float64{},
 }
@@ -30,6 +31,7 @@ var service2 = format.Service{
 		{Start: "2019-02-01", End: "2019-02-28"}: 0.0,
 		{Start: "2019-03-01", End: "2019-03-31"}: 0.0,
 		{Start: "2019-04-01", End: "2019-04-30"}: 0.1,
+		{Start: "2019-05-01", End: "2019-05-31"}: 0.2,
 	},
 	PriceEvolution: map[format.DateInterval]float64{},
 }
@@ -81,8 +83,8 @@ func TestWriteCSV(t *testing.T) {
 		if err != nil {
 			t.Errorf("Expected no error, got %v", err)
 		}
-		if strings.Split(string(fileContent), "\n")[0] != "Service,2019-01-01,2019-02-01,2019-03-01,2019-04-01" {
-			t.Errorf("Expected file content to be correct, got %s", string(fileContent))
+		if strings.Split(string(fileContent), "\n")[0] != "Service,2019-01-01,2019-02-01,2019-03-01,2019-04-01,2019-05-01" {
+			t.Errorf("Expected file content to be correct, got %s", strings.Split(string(fileContent), "\n")[0])
 		}
 	})
 	//Delete file

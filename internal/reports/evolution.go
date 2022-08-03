@@ -22,10 +22,7 @@ func (services Services) calculateEvolution() {
 					continue
 				}
 			} else if service.DatePrice[date] == 0.0 {
-				if service.DatePrice[previousDate] == 0.0 {
-					service.PriceEvolution[date] = 0.0
-					continue
-				} else {
+				if service.DatePrice[previousDate] != 0.0 {
 					service.PriceEvolution[date] = -999.0
 					continue
 				}
