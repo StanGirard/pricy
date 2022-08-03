@@ -1,6 +1,10 @@
 package format
 
-import "testing"
+import (
+	"io/ioutil"
+	"os"
+	"testing"
+)
 
 var datesIntervals DateIntervals = DateIntervals{
 	DateInterval{Start: "2018-01-03", End: "2018-01-04"},
@@ -52,6 +56,24 @@ func TestContainsDateInterval(t *testing.T) {
 		dateInterval := DateInterval{Start: "2018-01-01", End: "2018-01-02"}
 		if !ContainsDateInterval(datesIntervals, dateInterval) {
 			t.Errorf("Expected true, got false")
+		}
+	})
+}
+
+func TestPrint(t *testing.T) {
+	t.Run("TestPrint", func(t *testing.T) {
+		rescueStdout := os.Stdout
+		r, w, _ := os.Pipe()
+		os.Stdout = w
+
+		datesIntervals[0].Print()
+
+		w.Close()
+		out, _ := ioutil.ReadAll(r)
+		os.Stdout = rescueStdout
+
+		if string(out) != "2018-01-03 - 2018-01-04\n" {
+			t.Errorf("Expected 2018-01-03 - 2018-01-04, got %s", string(out))
 		}
 	})
 }
