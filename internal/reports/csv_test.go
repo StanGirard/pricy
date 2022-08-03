@@ -15,14 +15,11 @@ var service = format.Service{
 	Account: "123456789",
 	DatePrice: map[format.DateInterval]float64{
 		{Start: "2019-01-01", End: "2019-01-31"}: 0.1,
-		{Start: "2019-02-01", End: "2019-02-28"}: 0.1,
-		{Start: "2019-03-01", End: "2019-03-31"}: 0.1,
+		{Start: "2019-02-01", End: "2019-02-28"}: 0.0,
+		{Start: "2019-03-01", End: "2019-03-31"}: 0.0,
+		{Start: "2019-04-01", End: "2019-04-30"}: 0.1,
 	},
-	PriceEvolution: map[format.DateInterval]float64{
-		{Start: "2019-01-01", End: "2019-01-31"}: 0.0,
-		{Start: "2019-02-01", End: "2019-02-28"}: 0.02,
-		{Start: "2019-03-01", End: "2019-03-31"}: 0.03,
-	},
+	PriceEvolution: map[format.DateInterval]float64{},
 }
 var service2 = format.Service{
 	Name:    "Amazon Elastic Compute Cloud 2",
@@ -30,14 +27,11 @@ var service2 = format.Service{
 	Account: "123456789",
 	DatePrice: map[format.DateInterval]float64{
 		{Start: "2019-01-01", End: "2019-01-31"}: 0.1,
-		{Start: "2019-02-01", End: "2019-02-28"}: 0.1,
-		{Start: "2019-03-01", End: "2019-03-31"}: 0.1,
+		{Start: "2019-02-01", End: "2019-02-28"}: 0.0,
+		{Start: "2019-03-01", End: "2019-03-31"}: 0.0,
+		{Start: "2019-04-01", End: "2019-04-30"}: 0.1,
 	},
-	PriceEvolution: map[format.DateInterval]float64{
-		{Start: "2019-01-01", End: "2019-01-31"}: 0.0,
-		{Start: "2019-02-01", End: "2019-02-28"}: 0.02,
-		{Start: "2019-03-01", End: "2019-03-31"}: 0.03,
-	},
+	PriceEvolution: map[format.DateInterval]float64{},
 }
 
 func TestGenerateCostCSVArray(t *testing.T) {
@@ -87,7 +81,7 @@ func TestWriteCSV(t *testing.T) {
 		if err != nil {
 			t.Errorf("Expected no error, got %v", err)
 		}
-		if strings.Split(string(fileContent), "\n")[0] != "Service,2019-01-01,2019-02-01,2019-03-01" {
+		if strings.Split(string(fileContent), "\n")[0] != "Service,2019-01-01,2019-02-01,2019-03-01,2019-04-01" {
 			t.Errorf("Expected file content to be correct, got %s", string(fileContent))
 		}
 	})

@@ -19,12 +19,17 @@ func TestCalculateEvolution(t *testing.T) {
 		for i, value := range service.PriceEvolution {
 			if i.Start == "2019-01-01" && i.End == "2019-01-31" && value == 0.0 {
 				continue
-			} else if i.Start == "2019-02-01" && i.End == "2019-02-28" && value == 0.00 {
+			} else if i.Start == "2019-02-01" && i.End == "2019-02-28" && value == 0.1 {
 				continue
 			} else if i.Start == "2019-03-01" && i.End == "2019-03-31" && value == 0.00 {
 				continue
 			} else {
-				t.Errorf("Expected 0.00, got %f", value)
+				if value == 999.0 || value == -999.0 {
+					continue
+				} else {
+					t.Errorf("Expected 0.0, got %f", value)
+				}
+
 			}
 		}
 	}
