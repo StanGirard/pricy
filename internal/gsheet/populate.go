@@ -50,7 +50,7 @@ func addChart(service *sheets.Service, spreadsheetId string, idSheetToAddTo int6
 							NewSheet: false,
 							OverlayPosition: &sheets.OverlayPosition{
 								AnchorCell: &sheets.GridCoordinate{
-									SheetId:     1024,
+									SheetId:     idSheetToAddTo,
 									RowIndex:    0,
 									ColumnIndex: 0,
 								},
