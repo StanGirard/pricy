@@ -2,6 +2,7 @@ package helpers
 
 import "strings"
 
+// Convert an array of arrays of strings to an array of arrays of interfaces
 func ConvertStringToInterface(array [][]string) [][]interface{} {
 	old := array
 	new := make([][]interface{}, len(old))
