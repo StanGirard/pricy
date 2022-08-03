@@ -126,6 +126,7 @@ func writeToFile(html string) {
 }
 
 func (services Services) initHTML() {
+	flag.Parse()
 	if *html {
 		html := services.generateHTML()
 		writeToFile(html)

@@ -29,7 +29,7 @@ lint:
 ## test: Run unit tests
 .PHONY: test
 test:
-	go test ./...
+	go test ./... -cover
 
 ## release: Release a new version
 .PHONY: release
