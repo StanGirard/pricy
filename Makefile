@@ -35,5 +35,5 @@ test:
 .PHONY: release
 release: test
 	git tag -a "v$(VERSION)" -m "$(VERSION)"
-	git push origin "$(VERSION)"
+	git push origin "v$(VERSION)"
 	# goreleaser release --rm-dist
