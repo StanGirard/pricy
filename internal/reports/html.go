@@ -35,9 +35,10 @@ var styleTmpl string
 //go
 
 var (
-	html = flag.Bool("html", false, "print in html format")
+	html = flag.Bool("html", false, "print in html format") // Flag to print an html report
 )
 
+// Gets the price of the service given a dateinterval and formats it with 2 decimals
 func getPriceForDateService(service format.Service, date format.DateInterval) float64 {
 
 	stringValue := fmt.Sprintf("%.2f", service.DatePrice[date])
@@ -45,6 +46,7 @@ func getPriceForDateService(service format.Service, date format.DateInterval) fl
 	return fl
 }
 
+// Gets the evolution of the service given a dateinterval and formats it with 2 decimals
 func getEvolutionForDateService(service format.Service, date format.DateInterval) float64 {
 
 	stringValue := fmt.Sprintf("%.2f", service.PriceEvolution[date])
@@ -52,12 +54,14 @@ func getEvolutionForDateService(service format.Service, date format.DateInterval
 	return fl
 }
 
+// Pretty print the date as DD/MM in order to take less space in the html report
 func niceDate(date string) string {
 	t, _ := time.Parse("2006-01-02", date)
 	return t.Format("02/01")
 
 }
 
+// Merges all tpl file into one template (Files are in templates/)
 func createTemplate() (*template.Template, error) {
 	tmpl, err := template.New("cost").Funcs(template.FuncMap{"getPrice": getPriceForDateService, "niceDate": niceDate}).Parse(costTmpl)
 	if err != nil {
@@ -84,6 +88,7 @@ func createTemplate() (*template.Template, error) {
 	return tmpl, err
 }
 
+// Generate the html given the services
 func (services Services) generateHTML() string {
 	dates := format.SortDates(format.FindDatesIntervals(services))
 
@@ -110,6 +115,7 @@ func (services Services) generateHTML() string {
 
 }
 
+// Write the html into a file
 func writeToFile(html string) {
 	f, err := os.Create("pricy.html")
 	if err != nil {
@@ -125,6 +131,7 @@ func writeToFile(html string) {
 
 }
 
+// Logic around flags of the html reports
 func (services Services) initHTML() {
 	flag.Parse()
 	if *html {

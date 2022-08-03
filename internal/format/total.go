@@ -1,5 +1,6 @@
 package format
 
+// Get the total cost per day of all services
 func TotalCostUsage(Services Services) []TotalPerDay {
 	var TotalPerDays []TotalPerDay
 	for _, service := range Services {

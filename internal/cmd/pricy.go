@@ -14,18 +14,19 @@ import (
 )
 
 var (
-	prometheus  = flag.Bool("prometheus", false, "print prometheus metrics")
-	azureFlag   = flag.Bool("azure", false, "print azure metrics")
-	awsFlag     = flag.Bool("aws", false, "print aws metrics")
-	granularity = flag.String("granularity", "DAILY", "granularity to get cost usage")
-	days        = flag.Int("days", 14, "get cost usage for last 14 days")
-	interval    = flag.String("interval", "", "get cost usage for a specific interval as '2022-03-30:2022-03-31' ")
+	prometheus  = flag.Bool("prometheus", false, "print prometheus metrics")                                        // Creates a prometheus exporter on http://localhost:2112/metrics
+	azureFlag   = flag.Bool("azure", false, "print azure metrics")                                                  // Get the cost from azure
+	awsFlag     = flag.Bool("aws", false, "print aws metrics")                                                      // Get the cost from aws
+	granularity = flag.String("granularity", "DAILY", "granularity to get cost usage")                              // Granularity to get cost usage, either DAILY or MONTHLY
+	days        = flag.Int("days", 14, "get cost usage for last 14 days")                                           // Time range in days since today
+	interval    = flag.String("interval", "", "get cost usage for a specific interval as '2022-03-30:2022-03-31' ") // Date interval for the cost usage, if empty, it will get the cost usage for the last 14 days
 )
 
 type Services []format.Service
 
-var m sync.Mutex
+var m sync.Mutex // Mutex to protect write to the services variable when using prometheus
 
+// Executes Pricy
 func Execute() error {
 	flag.Parse()
 	configuration := format.Configuration{
@@ -48,6 +49,7 @@ func Execute() error {
 	return nil
 }
 
+// Get the cost of all services from the cloud provider that is specified with the flag.
 func getServices(services *[]format.Service, m *sync.Mutex, configuration format.Configuration) {
 	m.Lock()
 	if *azureFlag {
@@ -62,6 +64,7 @@ func getServices(services *[]format.Service, m *sync.Mutex, configuration format
 	m.Unlock()
 }
 
+// Updates the services price every 8 hours
 func updateServices(services *[]format.Service, m *sync.Mutex, configuration format.Configuration) {
 	var timer = time.Now()
 	go func() {

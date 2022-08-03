@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	printVersion = flag.Bool("version", false, "print version and exit")
+	printVersion = flag.Bool("version", false, "print version and exit") // Displays the version of the programm
 )
 
 func main() {
@@ -21,8 +21,9 @@ func main() {
 }
 
 //go:embed VERSION
-var version string
+var version string // Version of the application embeded
 
+// Run Pricy
 func run() error {
 	flag.Parse()
 

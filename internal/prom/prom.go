@@ -15,6 +15,7 @@ import (
 	"github.com/stangirard/pricy/internal/format"
 )
 
+// Cleans strings in order to be prometheus compliant
 func cleanString(str string) string {
 	// replace every non-alphanumeric character with an underscore
 	str = strings.Replace(str, " ", "_", -1)
@@ -44,8 +45,10 @@ func cleanString(str string) string {
 
 }
 
+// Gauges list
 var gauges = make(map[string]prometheus.Gauge)
 
+// Prometheus gauge creator and updater
 func recordMetrics(services *[]format.Service, m *sync.Mutex) {
 
 	flag.Set("days", "1")
@@ -92,6 +95,7 @@ func recordMetrics(services *[]format.Service, m *sync.Mutex) {
 	}()
 }
 
+// Execute the prometheus exporter
 func Execute(services *[]format.Service, m *sync.Mutex) {
 	recordMetrics(services, m)
 

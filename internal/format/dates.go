@@ -5,6 +5,7 @@ import (
 	"sort"
 )
 
+// Creates the headers for the CSV export. It appends Service at the beginning and then gets all the dates.
 func (dates DateIntervals) Headers() []string {
 	var headers []string
 
@@ -23,22 +24,27 @@ func (dates DateIntervals) Headers() []string {
 	return headers
 }
 
+// Get the start date of a date interval
 func (d DateInterval) GetStartDate() string {
 	return d.Start
 }
 
+// Get the end date of a date interval
 func (d DateInterval) GetEndDate() string {
 	return d.End
 }
 
+// Prints the date interval
 func (d DateInterval) Print() {
 	fmt.Printf("%s - %s\n", d.Start, d.End)
 }
 
+// Turns the date interval into a string
 func (d DateInterval) String() string {
 	return fmt.Sprintf("%s - %s", d.Start, d.End)
 }
 
+// Check wether an array of date interval contains a dateinterval
 func ContainsDateInterval(dates []DateInterval, date DateInterval) bool {
 	for _, d := range dates {
 		if d.Start == date.Start && d.End == date.End {
@@ -48,6 +54,7 @@ func ContainsDateInterval(dates []DateInterval, date DateInterval) bool {
 	return false
 }
 
+// Sort dates in a date interval array
 func SortDates(dates []DateInterval) []DateInterval {
 	for i := 0; i < len(dates); i++ {
 		for j := i + 1; j < len(dates); j++ {

@@ -18,6 +18,7 @@ var (
 	gsheetFlag = flag.Bool("gsheet", false, "print google sheet metrics")
 )
 
+// Takes an array of services and turns it into an array of array.
 func generateCostCSVArray(Services []format.Service) [][]string {
 	var csvArray [][]string
 	csvArray = append(csvArray, format.FindDatesIntervals(Services).Headers())
@@ -36,6 +37,7 @@ func generateCostCSVArray(Services []format.Service) [][]string {
 	return csvArray
 }
 
+// Write an array of arrays into a csv file
 func writeCSV(csvArray [][]string, filepath string) {
 	f, err := os.Create(filepath)
 	if err != nil {
@@ -52,6 +54,7 @@ func writeCSV(csvArray [][]string, filepath string) {
 
 }
 
+// Generate an array of arrays for the evolutions
 func csvEvolutionReport(Services []format.Service) [][]string {
 	var csvArray [][]string
 	csvArray = append(csvArray, format.FindDatesIntervals(Services).Headers())
@@ -70,6 +73,7 @@ func csvEvolutionReport(Services []format.Service) [][]string {
 	return csvArray
 }
 
+// Initis the csv service with the logic around the flags
 func (services Services) initCSV() {
 	flag.Parse()
 

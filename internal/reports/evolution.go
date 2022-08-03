@@ -4,6 +4,7 @@ import (
 	"github.com/stangirard/pricy/internal/format"
 )
 
+// Calculates the evolution of the prices by interval
 func (services Services) calculateEvolution() {
 	dates := format.FindDatesIntervals(services)
 	dates = format.SortDates(dates)
