@@ -1,6 +1,8 @@
 package format
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestTotalCostUsage(t *testing.T) {
 	var service Service
@@ -31,11 +33,11 @@ func TestTotalCostUsage(t *testing.T) {
 		{Start: "2019-03-01", End: "2019-03-31"}: 0.03,
 	}
 
-	services := []Service{service, service2}
+	services := append([]Service{}, service, service2)
 	totalCost := TotalCostUsage(services)
 	for _, totalPerDay := range totalCost {
 		if totalPerDay.TotalCost != 0.2 {
-			t.Errorf("Expected 0.1, got %f", totalPerDay.TotalCost)
+			t.Errorf("Expected 0.2, got %f", totalPerDay.TotalCost)
 		}
 	}
 }
