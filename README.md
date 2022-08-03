@@ -1,5 +1,5 @@
 # Pricy
-[![Go Report Card](https://goreportcard.com/badge/github.com/stangirard/pricy)](https://goreportcard.com/report/github.com/stangirard/pricy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/stangirard/pricy)](https://goreportcard.com/report/github.com/stangirard/pricy) [![codecov](https://codecov.io/gh/StanGirard/pricy-aws-azure-cost-report/branch/main/graph/badge.svg?token=YYBBL7JVCR)](https://codecov.io/gh/StanGirard/pricy-aws-azure-cost-report)
 
 ## Install
 
