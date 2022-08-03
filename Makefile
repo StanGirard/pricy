@@ -34,6 +34,6 @@ test:
 ## release: Release a new version
 .PHONY: release
 release: test
-	git tag -a "$(VERSION)" -m "$(VERSION)"
+	git tag -a "v$(VERSION)" -m "$(VERSION)"
 	git push origin "$(VERSION)"
 	# goreleaser release --rm-dist
