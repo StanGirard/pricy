@@ -1,5 +1,5 @@
 # Pricy
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/stangirard/pricy)](https://goreportcard.com/report/github.com/stangirard/pricy)
 
 ## Install
 
