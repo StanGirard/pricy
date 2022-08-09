@@ -1,0 +1,108 @@
+- name: S3 Public Access Block
+  description: ""
+  status: FAIL
+  id: AWS_S3_005
+  results:
+    - message: S3 bucket bdh-access-logs-190223107200-eu-west-1 is using Public Access Block
+      status: OK
+      resourceid: bdh-access-logs-190223107200-eu-west-1
+    - message: S3 bucket cf-templates-kt298vf3a6xi-eu-west-1 is using Public Access Block
+      status: OK
+      resourceid: cf-templates-kt298vf3a6xi-eu-west-1
+    - message: S3 bucket devops-test-bucket-dynamo is using Public Access Block
+      status: OK
+      resourceid: devops-test-bucket-dynamo
+    - message: S3 bucket konectom-app-staging-consent-drop is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-consent-drop
+    - message: S3 bucket konectom-app-staging-data-export is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-data-export
+    - message: S3 bucket konectom-app-staging-data-lake is not using Public Access Block
+      status: FAIL
+      resourceid: konectom-app-staging-data-lake
+    - message: S3 bucket konectom-app-staging-data-migration is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-data-migration
+    - message: S3 bucket konectom-app-staging-data-pipeline-logs is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-data-pipeline-logs
+    - message: S3 bucket konectom-app-staging-dynamo-export is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-dynamo-export
+    - message: S3 bucket konectom-app-staging-emr-logs is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-emr-logs
+    - message: S3 bucket konectom-app-staging-enriched-data is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-enriched-data
+    - message: S3 bucket konectom-app-staging-experimental-bal-features is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-experimental-bal-features
+    - message: S3 bucket konectom-app-staging-external-source-raw-data is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-external-source-raw-data
+    - message: S3 bucket konectom-app-staging-glue-scripts is not using Public Access Block
+      status: FAIL
+      resourceid: konectom-app-staging-glue-scripts
+    - message: S3 bucket konectom-app-staging-glue-temporary is not using Public Access Block
+      status: FAIL
+      resourceid: konectom-app-staging-glue-temporary
+    - message: S3 bucket konectom-app-staging-invalid-data is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-invalid-data
+    - message: S3 bucket konectom-app-staging-lambda is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-lambda
+    - message: S3 bucket konectom-app-staging-raw-data is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-raw-data
+    - message: S3 bucket konectom-app-staging-raw-data-schemas is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-raw-data-schemas
+    - message: S3 bucket konectom-app-staging-raw-k1-data is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-raw-k1-data
+    - message: S3 bucket konectom-app-staging-rds-export is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-rds-export
+    - message: S3 bucket konectom-app-staging-unvalidated-raw-data is using Public Access Block
+      status: OK
+      resourceid: konectom-app-staging-unvalidated-raw-data
+    - message: S3 bucket konectom-cost-report-test is using Public Access Block
+      status: OK
+      resourceid: konectom-cost-report-test
+    - message: S3 bucket konectom-forest-admin.staging is not using Public Access Block
+      status: FAIL
+      resourceid: konectom-forest-admin.staging
+    - message: S3 bucket konectom-hcp-dashboard.app-staging.env.k2-mvp.bhs.ninja is not using Public Access Block
+      status: FAIL
+      resourceid: konectom-hcp-dashboard.app-staging.env.k2-mvp.bhs.ninja
+    - message: S3 bucket konectom-infra-aws-notifications is using Public Access Block
+      status: OK
+      resourceid: konectom-infra-aws-notifications
+    - message: S3 bucket konectom-test-athena-cost-preview-results is using Public Access Block
+      status: OK
+      resourceid: konectom-test-athena-cost-preview-results
+    - message: S3 bucket konectom2-athena-quer-results is not using Public Access Block
+      status: FAIL
+      resourceid: konectom2-athena-quer-results
+    - message: S3 bucket test-concatenation-csv-by-lambda is using Public Access Block
+      status: OK
+      resourceid: test-concatenation-csv-by-lambda
+- name: Subnets in different zone
+  description: ""
+  status: OK
+  id: AWS_VPC_005
+  results:
+    - message: Subnets are in different zone on vpc-0236c415cc6f66713
+      status: OK
+      resourceid: vpc-0236c415cc6f66713
+- name: At least 2 subnets
+  description: ""
+  status: OK
+  id: AWS_VPC_006
+  results:
+    - message: VPC vpc-0236c415cc6f66713 has at least 2 subnets
+      status: OK
+      resourceid: vpc-0236c415cc6f66713
