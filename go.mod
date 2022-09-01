@@ -1,6 +1,6 @@
 module github.com/stangirard/pricy
 
-go 1.18
+go 1.19
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.1.0
