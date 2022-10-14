@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go v1.44.69
 	github.com/prometheus/client_golang v1.12.2
 	github.com/stretchr/testify v1.8.0
-	golang.org/x/oauth2 v0.0.0-20220722155238-128564f6959c
+	golang.org/x/oauth2 v0.0.0-20221014153046-6fdb5e3db783
 	google.golang.org/api v0.91.0
 )
 
